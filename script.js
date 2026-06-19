@@ -298,36 +298,91 @@
   }
 
   /* =======================================================
-     9. GALERÍA — Lightbox
+     9. GALERÍA — Coverflow 3D (showroom) + Lightbox
      ======================================================= */
-  function initLightbox() {
-    const figs = $$('.gitem');
+  function initGallery() {
+    const stage = $('#coverStage');
     const lb = $('#lightbox');
-    if (!figs.length || !lb) return;
-    const img = $('#lbImg'), cap = $('#lbCap');
-    const data = figs.map(f => ({ src: f.dataset.src, cap: (f.querySelector('figcaption') || {}).textContent || '' }));
-    let idx = 0;
+    if (!stage || !lb) return;
+    const items = $$('.cover__item', stage);
+    const capEl = $('#coverCap'), dotsEl = $('#coverDots');
+    const data = items.map(it => ({ src: it.dataset.src, cap: it.dataset.cap || '' }));
+    const len = items.length;
+    let active = 0, timer = null, moved = false, down = false, sx = 0;
 
-    const show = i => {
-      idx = (i + data.length) % data.length;
-      img.src = data[idx].src;
-      img.alt = data[idx].cap;
-      cap.textContent = data[idx].cap;
-    };
-    const open = i => { show(i); lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; };
-    const close = () => { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
+    const gapFor = () => { const w = innerWidth; return w < 420 ? 118 : w < 680 ? 140 : w < 1024 ? 176 : 214; };
 
-    figs.forEach((f, i) => f.addEventListener('click', () => open(i)));
-    $('#lbClose').addEventListener('click', close);
-    $('#lbPrev').addEventListener('click', () => show(idx - 1));
-    $('#lbNext').addEventListener('click', () => show(idx + 1));
-    lb.addEventListener('click', e => { if (e.target === lb) close(); });
+    function render() {
+      const gap = gapFor();
+      items.forEach((it, i) => {
+        let off = i - active;
+        if (off > len / 2) off -= len;       // recorrido circular (más corto)
+        if (off < -len / 2) off += len;
+        const abs = Math.abs(off), sign = Math.sign(off), vis = abs <= 3;
+        const rot = -sign * Math.min(abs, 3) * 38;
+        const sc = Math.max(0.6, 1 - abs * 0.16);
+        it.style.transform = 'translate(-50%,-50%) translateX(' + (off * gap) + 'px) rotateY(' + rot + 'deg) scale(' + sc + ')';
+        it.style.zIndex = String(100 - abs);
+        it.style.opacity = vis ? String(Math.max(0, 1 - abs * 0.16)) : '0';
+        it.style.filter = abs >= 2 ? 'brightness(.78)' : 'none';
+        it.style.pointerEvents = vis ? 'auto' : 'none';
+        it.classList.toggle('is-active', i === active);
+      });
+      if (capEl) capEl.textContent = data[active].cap;
+      Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('is-active', i === active));
+    }
+    const go = n => { active = (n + len) % len; render(); };
+    const next = () => go(active + 1), prev = () => go(active - 1);
+    const reset = () => { clearInterval(timer); if (!prefersReduced) timer = setInterval(next, 3800); };
+
+    // puntos
+    data.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('aria-label', 'Ver imagen ' + (i + 1));
+      b.addEventListener('click', () => { go(i); reset(); });
+      dotsEl.appendChild(b);
+    });
+    $('#coverPrev').addEventListener('click', () => { prev(); reset(); });
+    $('#coverNext').addEventListener('click', () => { next(); reset(); });
+
+    // lightbox
+    const lbImg = $('#lbImg'), lbCap = $('#lbCap'); let lbIdx = 0;
+    const showLB = i => { lbIdx = (i + len) % len; lbImg.src = data[lbIdx].src; lbImg.alt = data[lbIdx].cap; lbCap.textContent = data[lbIdx].cap; };
+    const openLB = i => { showLB(i); lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; };
+    const closeLB = () => { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
+    $('#lbClose').addEventListener('click', closeLB);
+    $('#lbPrev').addEventListener('click', () => showLB(lbIdx - 1));
+    $('#lbNext').addEventListener('click', () => showLB(lbIdx + 1));
+    lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
     document.addEventListener('keydown', e => {
       if (!lb.classList.contains('is-open')) return;
-      if (e.key === 'Escape') close();
-      if (e.key === 'ArrowRight') show(idx + 1);
-      if (e.key === 'ArrowLeft') show(idx - 1);
+      if (e.key === 'Escape') closeLB();
+      if (e.key === 'ArrowRight') showLB(lbIdx + 1);
+      if (e.key === 'ArrowLeft') showLB(lbIdx - 1);
     });
+
+    // clic: pieza central → ampliar; otra → centrarla
+    items.forEach((it, i) => it.addEventListener('click', () => {
+      if (moved) { moved = false; return; }
+      if (i === active) openLB(i); else { go(i); reset(); }
+    }));
+
+    // arrastrar / deslizar
+    const px = e => e.touches ? e.touches[0].clientX : (e.changedTouches ? e.changedTouches[0].clientX : e.clientX);
+    const onDown = e => { down = true; moved = false; sx = px(e); clearInterval(timer); };
+    const onMove = e => { if (down && Math.abs(px(e) - sx) > 6) moved = true; };
+    const onUp = e => { if (!down) return; down = false; const dx = px(e) - sx; if (dx > 50) prev(); else if (dx < -50) next(); reset(); };
+    stage.addEventListener('mousedown', onDown);
+    stage.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    stage.addEventListener('touchstart', onDown, { passive: true });
+    stage.addEventListener('touchmove', onMove, { passive: true });
+    stage.addEventListener('touchend', onUp);
+    stage.addEventListener('mouseenter', () => clearInterval(timer));
+    stage.addEventListener('mouseleave', reset);
+
+    let rT; window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(render, 150); });
+    render(); reset();
   }
 
   /* =======================================================
@@ -440,7 +495,7 @@
     initCounters();
     initParallax();
     initCatalog();
-    initLightbox();
+    initGallery();
     initTestimonials();
     initForm();
     initMarquee();

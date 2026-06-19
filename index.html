@@ -560,27 +560,34 @@
     <header class="section__head reveal">
       <span class="kicker">Galería</span>
       <h2 class="section__title">Nuestro <span class="grad">inventario</span> en imágenes</h2>
-      <p class="section__lead">Productos reales de nuestro catálogo. Haz clic en cualquier imagen para verla en detalle.</p>
+      <p class="section__lead">Explora nuestro inventario real como en una vitrina. Arrastra, desliza o usa las flechas; haz clic en la pieza central para ampliarla.</p>
     </header>
 
-    <div class="gallery__masonry" id="galleryGrid">
-      <figure class="gitem reveal" data-src="assets/products/lampara1.webp"><img src="assets/products/lampara1.webp" alt="Faro sellado halógeno Wagner H4651" loading="lazy" decoding="async" width="731" height="830" /><figcaption>Faro Halógeno H4651</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/stop1.webp"><img src="assets/products/stop1.webp" alt="Stop trasero Toyota" loading="lazy" decoding="async" width="507" height="796" /><figcaption>Stop Toyota</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/tapadistribuidor.webp"><img src="assets/products/tapadistribuidor.webp" alt="Tapa de distribuidor Denso EDC-72" loading="lazy" decoding="async" width="602" height="687" /><figcaption>Tapa Distribuidor Denso</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/lampara3.webp"><img src="assets/products/lampara3.webp" alt="Faro halógeno Wagner H6054" loading="lazy" decoding="async" width="1002" height="702" /><figcaption>Faro Halógeno H6054</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/stop5.webp"><img src="assets/products/stop5.webp" alt="Stop triple blanco, rojo y ámbar" loading="lazy" decoding="async" width="486" height="756" /><figcaption>Stop Triple Universal</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/llaves2.webp"><img src="assets/products/llaves2.webp" alt="Switch de encendido MAX con llaves" loading="lazy" decoding="async" width="560" height="707" /><figcaption>Switch de Encendido MAX</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/stop6.webp"><img src="assets/products/stop6.webp" alt="Stop Chevrolet LUV" loading="lazy" decoding="async" width="1100" height="722" /><figcaption>Stop Chevrolet LUV</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/tapadistribuidor2.webp"><img src="assets/products/tapadistribuidor2.webp" alt="Tapa de distribuidor Chrysler DC-85" loading="lazy" decoding="async" width="576" height="737" /><figcaption>Tapa Distribuidor Chrysler</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/stop2.webp"><img src="assets/products/stop2.webp" alt="Stop campero Daihatsu" loading="lazy" decoding="async" width="490" height="752" /><figcaption>Stop Campero Daihatsu</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/lampara2.webp"><img src="assets/products/lampara2.webp" alt="Faro sellado Stanley" loading="lazy" decoding="async" width="781" height="760" /><figcaption>Faro Sellado Stanley</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/llaves1.webp"><img src="assets/products/llaves1.webp" alt="Switches de encendido variados" loading="lazy" decoding="async" width="652" height="762" /><figcaption>Switches de Encendido</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/stop3.webp"><img src="assets/products/stop3.webp" alt="Stop Renault 6" loading="lazy" decoding="async" width="865" height="762" /><figcaption>Stop Renault 6</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/tapadistribuidor3.webp"><img src="assets/products/tapadistribuidor3.webp" alt="Tapa de distribuidor Standard DR-450" loading="lazy" decoding="async" width="1100" height="661" /><figcaption>Tapa Distribuidor DR-450</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/stop7.webp"><img src="assets/products/stop7.webp" alt="Stop Renault 4" loading="lazy" decoding="async" width="467" height="787" /><figcaption>Stop Renault 4</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/stop4.webp"><img src="assets/products/stop4.webp" alt="Stop Chevrolet Chevette" loading="lazy" decoding="async" width="960" height="722" /><figcaption>Stop Chevrolet Chevette</figcaption></figure>
-      <figure class="gitem reveal" data-src="assets/products/llaves4.webp"><img src="assets/products/llaves4.webp" alt="Switch de encendido con llaves" loading="lazy" decoding="async" width="632" height="712" /><figcaption>Switch de Encendido</figcaption></figure>
+    <div class="cover reveal">
+      <button class="cover__arrow cover__prev" id="coverPrev" type="button" aria-label="Imagen anterior">&#8249;</button>
+      <div class="cover__stage" id="coverStage">
+        <figure class="cover__item" data-src="assets/products/lampara1.webp" data-cap="Faro Halógeno H4651"><img src="assets/products/lampara1.webp" alt="Faro sellado halógeno Wagner H4651" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/stop1.webp" data-cap="Stop Toyota"><img src="assets/products/stop1.webp" alt="Stop trasero Toyota" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/tapadistribuidor.webp" data-cap="Tapa Distribuidor Denso"><img src="assets/products/tapadistribuidor.webp" alt="Tapa de distribuidor Denso EDC-72" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/lampara3.webp" data-cap="Faro Halógeno H6054"><img src="assets/products/lampara3.webp" alt="Faro halógeno Wagner H6054" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/stop5.webp" data-cap="Stop Triple Universal"><img src="assets/products/stop5.webp" alt="Stop triple blanco, rojo y ámbar" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/llaves2.webp" data-cap="Switch de Encendido MAX"><img src="assets/products/llaves2.webp" alt="Switch de encendido MAX con llaves" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/stop6.webp" data-cap="Stop Chevrolet LUV"><img src="assets/products/stop6.webp" alt="Stop Chevrolet LUV" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/tapadistribuidor2.webp" data-cap="Tapa Distribuidor Chrysler"><img src="assets/products/tapadistribuidor2.webp" alt="Tapa de distribuidor Chrysler DC-85" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/stop2.webp" data-cap="Stop Campero Daihatsu"><img src="assets/products/stop2.webp" alt="Stop campero Daihatsu" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/lampara2.webp" data-cap="Faro Sellado Stanley"><img src="assets/products/lampara2.webp" alt="Faro sellado Stanley" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/llaves1.webp" data-cap="Switches de Encendido"><img src="assets/products/llaves1.webp" alt="Switches de encendido variados" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/stop3.webp" data-cap="Stop Renault 6"><img src="assets/products/stop3.webp" alt="Stop Renault 6" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/tapadistribuidor3.webp" data-cap="Tapa Distribuidor DR-450"><img src="assets/products/tapadistribuidor3.webp" alt="Tapa de distribuidor Standard DR-450" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/stop7.webp" data-cap="Stop Renault 4"><img src="assets/products/stop7.webp" alt="Stop Renault 4" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/stop4.webp" data-cap="Stop Chevrolet Chevette"><img src="assets/products/stop4.webp" alt="Stop Chevrolet Chevette" loading="lazy" decoding="async" /></figure>
+        <figure class="cover__item" data-src="assets/products/llaves4.webp" data-cap="Switch de Encendido"><img src="assets/products/llaves4.webp" alt="Switch de encendido con llaves" loading="lazy" decoding="async" /></figure>
+      </div>
+      <button class="cover__arrow cover__next" id="coverNext" type="button" aria-label="Imagen siguiente">&#8250;</button>
     </div>
+    <p class="cover__caption" id="coverCap"></p>
+    <p class="cover__hint">Arrastra o desliza · haz clic en la pieza central para ampliarla</p>
+    <div class="cover__dots" id="coverDots" aria-label="Navegación de imágenes"></div>
   </div>
 </section>
 
