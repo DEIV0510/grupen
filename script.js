@@ -506,6 +506,17 @@
   }
 
   /* =======================================================
+     12b. Video del hero (autoplay seguro + reduced-motion)
+     ======================================================= */
+  function initHeroVideo() {
+    const v = document.querySelector('.hero__video');
+    if (!v) return;
+    if (prefersReduced) { v.removeAttribute('autoplay'); try { v.pause(); } catch (e) {} return; }
+    const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    if (v.readyState >= 2) tryPlay(); else v.addEventListener('canplay', tryPlay, { once: true });
+  }
+
+  /* =======================================================
      13. Misceláneos
      ======================================================= */
   function initMisc() {
@@ -525,6 +536,7 @@
     initReveal();
     initCounters();
     initParallax();
+    initHeroVideo();
     initCatalog();
     enhanceProducts();
     initGallery();
