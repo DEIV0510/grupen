@@ -290,7 +290,7 @@
         chip.classList.add('is-active');
         const f = chip.dataset.filter;
         items.forEach(it => {
-          const show = f === 'all' || it.dataset.cat === f;
+          const show = f === 'all' || it.dataset.cat === f || (f === 'promo' && it.dataset.promo === '1');
           it.classList.toggle('is-hidden', !show);
         });
       });
