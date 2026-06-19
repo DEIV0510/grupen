@@ -1,0 +1,20 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs / temporales
+*.log
+npm-debug.log*
+.cache/
+_shots/
+.playwright-mcp/
+
+# Editores
+.vscode/
+.idea/
+*.swp
