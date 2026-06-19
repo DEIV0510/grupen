@@ -298,6 +298,37 @@
   }
 
   /* =======================================================
+     8b. Realce de productos: chip "Ahorras $X" + tilt 3D
+     ======================================================= */
+  function enhanceProducts() {
+    const grid = $('#catalogGrid'); if (!grid) return;
+    const fmt = new Intl.NumberFormat('es-CO');
+    const cards = $$('.product', grid);
+    cards.forEach(card => {
+      const wasEl = $('.was', card), nowEl = $('.now', card), box = $('.product__price', card);
+      if (!wasEl || !nowEl || !box) return;
+      const was = parseInt(wasEl.textContent.replace(/[^\d]/g, ''), 10);
+      const now = parseInt(nowEl.textContent.replace(/[^\d]/g, ''), 10);
+      if (was > now) {
+        const chip = document.createElement('span');
+        chip.className = 'product__save';
+        chip.textContent = 'Ahorras $' + fmt.format(was - now);
+        box.appendChild(chip);
+      }
+    });
+    if (prefersReduced || !window.matchMedia('(pointer:fine)').matches) return;
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(820px) rotateX(' + (-py * 5).toFixed(2) + 'deg) rotateY(' + (px * 6).toFixed(2) + 'deg) translateY(-8px)';
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+  }
+
+  /* =======================================================
      9. GALERÍA — Coverflow 3D (showroom) + Lightbox
      ======================================================= */
   function initGallery() {
@@ -495,6 +526,7 @@
     initCounters();
     initParallax();
     initCatalog();
+    enhanceProducts();
     initGallery();
     initTestimonials();
     initForm();
