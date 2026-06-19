@@ -61,7 +61,7 @@
           if (p.y < -5) { p.y = canvas.height + 5; p.x = Math.random() * canvas.width; }
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(95,206,58,' + p.a + ')';
+          ctx.fillStyle = 'rgba(61,168,30,' + (p.a * 0.5) + ')';
           ctx.fill();
         });
         raf = requestAnimationFrame(draw);

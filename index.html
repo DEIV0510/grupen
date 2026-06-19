@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0c100d" />
+  <meta name="theme-color" content="#ffffff" />
 
   <!-- ====== SEO ====== -->
   <title>GRUPEN | Repuestos para Carros Clásicos · Envío Nacional y Pago Contraentrega</title>
@@ -75,11 +75,8 @@
   <canvas class="loader__particles" id="loaderParticles"></canvas>
   <div class="loader__inner">
     <div class="loader__emblem">
-      <span class="loader__ring"></span>
-      <img src="assets/brand/emblem.png" alt="" class="loader__logo" width="120" height="120" />
+      <img src="assets/brand/logo-full.png" alt="GRUPEN" class="loader__logo" width="260" height="250" />
     </div>
-    <div class="loader__word">GRUPEN</div>
-    <div class="loader__tag">Grupo Empresarial de Negocios</div>
     <div class="loader__bar"><span class="loader__bar-fill" id="loaderBar"></span></div>
     <div class="loader__pct" id="loaderPct">0%</div>
   </div>
@@ -88,12 +85,8 @@
 <!-- ================= HEADER ================= -->
 <header class="header" id="header">
   <div class="container header__inner">
-    <a href="#inicio" class="brand" aria-label="GRUPEN inicio">
-      <img src="assets/brand/emblem.png" alt="Emblema GRUPEN" class="brand__mark" width="40" height="40" />
-      <span class="brand__text">
-        <span class="brand__name">GRUPEN</span>
-        <span class="brand__sub">Repuestos para Vehículos</span>
-      </span>
+    <a href="#inicio" class="brand" aria-label="GRUPEN — Grupo Empresarial de Negocios">
+      <img src="assets/brand/logo-horizontal.png" alt="GRUPEN — Grupo Empresarial de Negocios" class="brand__logo" width="200" height="57" />
     </a>
 
     <nav class="nav" id="nav" aria-label="Principal">
@@ -178,7 +171,7 @@
 </section>
 
 <!-- ================= FRANJA DE CONFIANZA ================= -->
-<section class="assurance" aria-label="Garantías de compra">
+<section class="assurance band-dark" aria-label="Garantías de compra">
   <div class="container assurance__grid">
     <div class="assurance__item">
       <span class="assurance__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v3a5 5 0 0 1-10 0V4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3M9 17h6M12 12v5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
@@ -236,12 +229,16 @@
 
 <!-- ================= POR QUÉ GRUPEN ================= -->
 <section class="why section" id="beneficios">
-  <div class="container">
-    <header class="section__head reveal">
+  <div class="container why__layout">
+    <div class="why__intro reveal">
       <span class="kicker">Respaldo empresarial</span>
       <h2 class="section__title">¿Por qué elegir <span class="grad">GRUPEN</span>?</h2>
-      <p class="section__lead">Somos un grupo empresarial sólido enfocado en mantener tu vehículo siempre en movimiento, con repuestos confiables y asesoría real.</p>
-    </header>
+      <p class="section__lead">Somos un grupo empresarial sólido enfocado en mantener vivo tu clásico, con repuestos confiables, pago contraentrega y asesoría real.</p>
+      <div class="why__cta">
+        <a href="#catalogo" class="btn btn--primary">Ver catálogo</a>
+        <a href="#buscador" class="btn btn--ghost">Buscar mi repuesto</a>
+      </div>
+    </div>
 
     <div class="why__grid">
       <article class="why__card reveal">
@@ -467,7 +464,7 @@
 </section>
 
 <!-- ================= BUSCADOR DE REPUESTOS ================= -->
-<section class="finder section" id="buscador">
+<section class="finder section band-dark" id="buscador">
   <div class="finder__bg" aria-hidden="true"></div>
   <div class="container finder__inner">
     <div class="finder__copy reveal">
@@ -528,28 +525,28 @@
 
     <div class="process__grid">
       <article class="step reveal">
-        <span class="step__num">01</span>
         <span class="step__icon"><svg viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 1-4.95 11.95A7 7 0 0 1 11 4Zm9 16-4.3-4.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+        <span class="step__num">Paso 01</span>
         <h3>Solicita tu repuesto</h3>
-        <p>Escríbenos por WhatsApp o el buscador con los datos de tu vehículo.</p>
+        <p>Escríbenos por WhatsApp o el buscador con los datos de tu carro clásico.</p>
       </article>
       <article class="step reveal" data-delay="80">
-        <span class="step__num">02</span>
         <span class="step__icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="m17 16 2 2 3-3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="step__num">Paso 02</span>
         <h3>Verificamos disponibilidad</h3>
         <p>Confirmamos existencias y compatibilidad con tu marca, modelo y año.</p>
       </article>
       <article class="step reveal" data-delay="160">
         <span class="step__icon"><svg viewBox="0 0 24 24"><path d="M7 3h10l2 4v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7l2-4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 11h6M9 14h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
-        <span class="step__num">03</span>
+        <span class="step__num">Paso 03</span>
         <h3>Recibes tu cotización</h3>
         <p>Te enviamos precio y condiciones claras, sin sorpresas.</p>
       </article>
       <article class="step reveal" data-delay="240">
-        <span class="step__num">04</span>
         <span class="step__icon"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.8" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="17" r="1.8" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></span>
+        <span class="step__num">Paso 04</span>
         <h3>Envío y pago contraentrega</h3>
-        <p>Despachamos por Interrapidísimo a todo el país. Pagas cómodamente cuando recibes tu pedido.</p>
+        <p>Despachamos por Interrapidísimo a todo el país. Pagas cuando recibes tu pedido.</p>
       </article>
     </div>
   </div>
@@ -622,11 +619,12 @@
 </section>
 
 <!-- ================= CTA PRINCIPAL ================= -->
-<section class="cta" id="contacto">
+<section class="cta band-dark" id="contacto">
   <div class="cta__bg" aria-hidden="true"><span class="cta__beam"></span></div>
   <div class="container cta__inner reveal">
-    <span class="kicker kicker--light">Estamos para servirte</span>
-    <h2 class="cta__title">Tu Vehículo Merece los <span class="grad">Mejores Repuestos</span></h2>
+    <img src="assets/brand/logo-horizontal-white.png" alt="GRUPEN" class="cta__logo" />
+    <span class="kicker">Estamos para servirte</span>
+    <h2 class="cta__title">Tu Clásico Merece los <span class="grad">Mejores Repuestos</span></h2>
     <p class="cta__text">Contáctanos ahora y recibe atención personalizada para encontrar exactamente lo que tu clásico necesita. Pago contraentrega y envíos a todo el país por Interrapidísimo.</p>
     <div class="cta__btns">
       <a href="#" class="btn btn--wa btn--xl" data-wa>
@@ -642,9 +640,8 @@
 <footer class="footer">
   <div class="container footer__grid">
     <div class="footer__col footer__brand">
-      <a href="#inicio" class="brand brand--footer">
-        <img src="assets/brand/emblem.png" alt="Emblema GRUPEN" class="brand__mark" width="44" height="44" />
-        <span class="brand__text"><span class="brand__name">GRUPEN</span><span class="brand__sub">Grupo Empresarial de Negocios</span></span>
+      <a href="#inicio" class="brand--footer" aria-label="GRUPEN — Grupo Empresarial de Negocios">
+        <img src="assets/brand/logo-horizontal-white.png" alt="GRUPEN — Grupo Empresarial de Negocios" class="footer__logo" />
       </a>
       <p class="footer__desc">Especialistas en repuestos para carros clásicos. Envíos a toda Colombia por Interrapidísimo con pago contraentrega. <strong>Siempre contigo.</strong></p>
       <div class="footer__social" aria-label="Redes sociales">
