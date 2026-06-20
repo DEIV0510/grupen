@@ -507,9 +507,19 @@ svg{width:100%;height:100%}
   .finder__copy .section__title{text-align:left}
 }
 @media(max-width:680px){
-  .section{padding:48px 0}
-  .section__head{margin-bottom:26px}
-  .hero{padding-top:96px;padding-bottom:44px;min-height:88svh}
+  .section{padding:34px 0}
+  .section__head{margin-bottom:18px}
+  .stats{padding:26px 0}
+  .marcas{padding:13px 0}
+  .assurance{padding:22px 0}
+  .cta{padding:46px 0}
+  .footer{padding-top:38px}
+  .footer__grid{padding-bottom:26px}
+  .why__layout{gap:14px}
+  .finder__inner{gap:20px}
+  .catalog__more{margin-top:20px}
+  .testi__dots{margin-top:18px}
+  .hero{padding-top:90px;padding-bottom:28px;min-height:84svh}
   .hero__trust{gap:8px 16px}
   .hero__stat{display:none}
   /* En celular, encuadrar el lado izquierdo del carro (stop encendido) */
