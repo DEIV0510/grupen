@@ -12,7 +12,7 @@
     phone:    '+57 300 000 0000',       // ← teléfono visible / para llamadas
     email:    'ventas@grupen.com.co',   // ← correo de contacto
     city:     'Colombia',               // ← ciudad / ubicación
-    waGreeting: 'Hola GRUPEN 👋, estoy interesado en repuestos para mi carro clásico.',
+    waGreeting: 'Hola GRUPEN 👋, estoy interesado en repuestos para transporte pesado.',
     social: {                           // ← enlaces de redes (deja '#' si aún no tienes)
       facebook:  '#',
       instagram: '#',
@@ -314,64 +314,25 @@
   const CAT_NAME = {}; CATEGORIES.forEach(c => CAT_NAME[c.id] = c.name);
 
   // Catálogo escalable: agrega/edita aquí (o cárgalo desde JSON/API a futuro).
+  // SOLO productos reales enviados por el cliente (con foto). Agrega aquí los nuevos.
   const PRODUCTS = [
-    { name:'Stop trasero LED 24V', ref:'STL-24', brand:'Hella', cat:'luces' },
-    { name:'Farola delantera halógena', ref:'FH-700', brand:'Hella', cat:'luces' },
-    { name:'Plafón lateral ámbar 24V', ref:'PL-24A', brand:'Multipartes', cat:'luces' },
-    { name:'Stop 3 funciones camión', ref:'ST-3F', brand:'Multipartes', cat:'luces' },
-    { name:'Exploradora LED auxiliar', ref:'EXP-LED', brand:'Hella', cat:'luces' },
-    { name:'Hoja de muelle delantera', ref:'HM-DEL', brand:'Imal', cat:'muelles' },
-    { name:'Paquete de muelle trasero', ref:'PM-TRA', brand:'Imal', cat:'muelles' },
-    { name:'Abrazadera de muelle (U-bolt)', ref:'AB-M', brand:'Imal', cat:'muelles' },
-    { name:'Buje de muelle poliuretano', ref:'BJ-POL', brand:'Imal', cat:'muelles' },
-    { name:'Filtro de aceite motor', ref:'B7299', brand:'Baldwin', cat:'filtros' },
-    { name:'Filtro de aire primario', ref:'PA2823', brand:'Baldwin', cat:'filtros' },
-    { name:'Separador agua/combustible', ref:'FS19763', brand:'Fleetguard', cat:'filtros' },
-    { name:'Filtro de combustible', ref:'FF5320', brand:'Fleetguard', cat:'filtros' },
-    { name:'Filtro de refrigerante', ref:'WF2076', brand:'Fleetguard', cat:'filtros' },
-    { name:'Filtro de aire secundario', ref:'PA2824', brand:'Baldwin', cat:'filtros' },
-    { name:'Correa de accesorios 8PK', ref:'COR-8PK', brand:'Partmo', cat:'correas' },
-    { name:'Correa de distribución', ref:'COR-DT', brand:'Partmo', cat:'correas' },
-    { name:'Correa ventilador', ref:'COR-VEN', brand:'Partmo', cat:'correas' },
-    { name:'Bomba de freno principal', ref:'BF-PR', brand:'Bendix', cat:'bombas-freno' },
-    { name:'Cilindro de rueda', ref:'CR-30', brand:'Incolbestos', cat:'bombas-freno' },
-    { name:'Bomba hidráulica de freno', ref:'BF-HID', brand:'Bendix', cat:'bombas-freno' },
-    { name:'Pastillas de freno delanteras', ref:'PFD-22', brand:'Incolbestos', cat:'pastillas' },
-    { name:'Banda de freno trasera', ref:'BFT-44', brand:'Incolbestos', cat:'pastillas' },
-    { name:'Juego de zapatas', ref:'ZAP-16', brand:'Incolbestos', cat:'pastillas' },
-    { name:'Soporte de motor', ref:'SM-01', brand:'Imal', cat:'soporteria' },
-    { name:'Tijera / soporte de muelle', ref:'TS-M', brand:'Imal', cat:'soporteria' },
-    { name:'Soporte de cabina', ref:'SC-02', brand:'Imal', cat:'soporteria' },
-    { name:'Alternador 24V 80A', ref:'ALT-2480', brand:'Partmo', cat:'electrico' },
-    { name:'Motor de arranque 24V', ref:'ARR-24', brand:'Partmo', cat:'electrico' },
-    { name:'Relay 24V 5 pines', ref:'RL-24', brand:'Hella', cat:'electrico' },
-    { name:'Switch de encendido', ref:'SW-ENC', brand:'Multipartes', cat:'electrico' },
-    { name:'Pulmón de freno 24/30', ref:'PUL-2430', brand:'Bendix', cat:'freno-aire' },
-    { name:'Secador de aire', ref:'SEC-AD', brand:'Bendix', cat:'freno-aire' },
-    { name:'Válvula relay de freno', ref:'VR-FR', brand:'Bendix', cat:'freno-aire' },
-    { name:'Válvula de cuatro vías', ref:'V4V', brand:'Bendix', cat:'freno-aire' },
-    { name:'Gobernador de aire', ref:'GOB-AIR', brand:'Bendix', cat:'freno-aire' },
-    { name:'Retenedor de rueda delantera', ref:'RET-RD', brand:'Víctor', cat:'retenedores' },
-    { name:'Retenedor de cigüeñal', ref:'RET-CG', brand:'SNA', cat:'retenedores' },
-    { name:'Retenedor de corona', ref:'RET-CO', brand:'SNA', cat:'retenedores' },
-    { name:'Rodamiento de rueda', ref:'TIM-RR', brand:'Timken', cat:'rodamientos' },
-    { name:'Cono y copa de rodamiento', ref:'TIM-CC', brand:'Timken', cat:'rodamientos' },
-    { name:'Cruceta de transmisión', ref:'CRU-TX', brand:'Precisión', cat:'rodamientos' },
-    { name:'Bombillo H4 24V', ref:'H4-24', brand:'Hella', cat:'bombillos' },
-    { name:'Bombillo H7 24V', ref:'H7-24', brand:'Hella', cat:'bombillos' },
-    { name:'Bombillo stop 1157 24V', ref:'1157-24', brand:'Multipartes', cat:'bombillos' },
-    { name:'Llanta 295/80 R22.5', ref:'LL-29580', brand:'Varias', cat:'llantas' },
-    { name:'Llanta 11R22.5 direccional', ref:'LL-11R', brand:'Varias', cat:'llantas' },
-    { name:'Aceite motor 15W40', ref:'15W40', brand:'Shell', cat:'lubricantes' },
-    { name:'Aceite caja/transmisión 85W140', ref:'85W140', brand:'Mobil', cat:'lubricantes' },
-    { name:'Refrigerante concentrado', ref:'REF-CON', brand:'Shell', cat:'lubricantes' },
-    { name:'Grasa multipropósito', ref:'GR-MP', brand:'Mobil', cat:'lubricantes' },
-    { name:'Turbo cargador', ref:'TBO-01', brand:'TKL', cat:'turbos' },
-    { name:'Kit de reparación de turbo', ref:'TBO-KIT', brand:'TKL', cat:'turbos' },
-    { name:'Actuador de turbo', ref:'TBO-ACT', brand:'TKL', cat:'turbos' },
-    { name:'Empaque de culata', ref:'EMP-CUL', brand:'Víctor', cat:'otros' },
-    { name:'Kit de empaques de motor', ref:'EMP-KIT', brand:'Víctor', cat:'otros' },
-    { name:'Crucetas y soportes varios', ref:'VAR-01', brand:'Multipartes', cat:'otros' }
+    { name:'Faro Sellado Halógeno H4651', ref:'H4651', brand:'Wagner', cat:'luces', img:'assets/products/lampara1.webp' },
+    { name:'Faro Halógeno H6054 Alto/Bajo', ref:'H6054', brand:'Wagner', cat:'luces', img:'assets/products/lampara3.webp' },
+    { name:'Faro Sellado Stanley', ref:'Sealed Beam', brand:'Stanley', cat:'luces', img:'assets/products/lampara2.webp' },
+    { name:'Stop Toyota Land Cruiser', ref:'STOP-TOY', brand:'', cat:'luces', img:'assets/products/stop1.webp' },
+    { name:'Stop Daihatsu 4-105', ref:'4-105', brand:'Multipartes', cat:'luces', img:'assets/products/stop2.webp' },
+    { name:'Stop Renault 6', ref:'4-95', brand:'Multipartes', cat:'luces', img:'assets/products/stop3.webp' },
+    { name:'Stop Chevrolet Chevette', ref:'STOP-CHEV', brand:'', cat:'luces', img:'assets/products/stop4.webp' },
+    { name:'Lámpara Triple Cromada', ref:'LT-CROM', brand:'', cat:'luces', img:'assets/products/stop5.webp' },
+    { name:'Stop Chevrolet LUV 1600', ref:'4-117', brand:'Multipartes', cat:'luces', img:'assets/products/stop6.webp' },
+    { name:'Lámpara Stop Renault 4', ref:'R-4-72', brand:'', cat:'luces', img:'assets/products/stop7.webp' },
+    { name:'Tapa Distribuidor Denso EDC-72', ref:'EDC-72', brand:'Valley Forge', cat:'electrico', img:'assets/products/tapadistribuidor.webp' },
+    { name:'Tapa Distribuidor Chrysler DC-85', ref:'DC-85', brand:'Valley Forge', cat:'electrico', img:'assets/products/tapadistribuidor2.webp' },
+    { name:'Tapa Distribuidor DR-450', ref:'DR-450', brand:'Standard', cat:'electrico', img:'assets/products/tapadistribuidor3.webp' },
+    { name:'Switch de Encendido MAX', ref:'SW-MAX', brand:'MAX', cat:'electrico', img:'assets/products/llaves2.webp' },
+    { name:'Switch de Encendido Ford Truck', ref:'16-40X', brand:'', cat:'electrico', img:'assets/products/llaves3.webp' },
+    { name:'Switch de Encendido con Llaves', ref:'SW-ENC', brand:'', cat:'electrico', img:'assets/products/llaves4.webp' },
+    { name:'Switches de Encendido (surtido)', ref:'LS-40X', brand:'Valley Forge', cat:'electrico', img:'assets/products/llaves1.webp' }
   ];
 
   let activeCat = 'all', searchQuery = '';
@@ -388,7 +349,7 @@
       '<button class="cat" type="button" data-cat="' + c.id + '">' +
       '<span class="cat__ico">' + svgIco(c.id) + '</span>' +
       '<span class="cat__name">' + c.name + '</span>' +
-      '<span class="cat__n">' + (counts[c.id] || 0) + '</span></button>'
+      (counts[c.id] ? '<span class="cat__n">' + counts[c.id] + '</span>' : '') + '</button>'
     ).join('');
 
     const matches = p => {
@@ -400,7 +361,7 @@
       const list = PRODUCTS.filter(matches);
       prodsGrid.innerHTML = list.map(p =>
         '<article class="prod">' +
-        '<span class="prod__ico">' + svgIco(p.cat) + '</span>' +
+        '<div class="prod__media">' + (p.img ? '<img src="' + p.img + '" alt="' + escAttr(p.name) + '" loading="lazy" decoding="async">' : '<span class="prod__ico">' + svgIco(p.cat) + '</span>') + '</div>' +
         '<div class="prod__body">' +
         '<span class="prod__cat">' + CAT_NAME[p.cat] + '</span>' +
         '<h4 class="prod__name">' + p.name + '</h4>' +
@@ -411,7 +372,7 @@
         '</div></div></article>'
       ).join('');
       if (countEl) countEl.textContent = (activeCat === 'all' && !searchQuery)
-        ? 'Todos los repuestos (' + PRODUCTS.length + ')'
+        ? 'Productos disponibles'
         : list.length + ' resultado' + (list.length === 1 ? '' : 's') + (activeCat !== 'all' ? ' · ' + CAT_NAME[activeCat] : '');
       if (emptyEl) emptyEl.hidden = list.length > 0;
       if (resetEl) resetEl.hidden = activeCat === 'all';

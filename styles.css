@@ -505,11 +505,14 @@ svg{width:100%;height:100%}
 .chip--clear{background:var(--green-050);border-color:rgba(61,168,30,.3);color:var(--green-700)}
 .chip--clear:hover{background:var(--green-500);color:#fff;border-color:transparent}
 .prods{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.prod{display:flex;gap:14px;padding:16px;border-radius:var(--radius);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),border-color .3s,box-shadow .3s}
-.prod:hover{transform:translateY(-4px);border-color:rgba(61,168,30,.4);box-shadow:var(--shadow)}
-.prod__ico{display:grid;place-items:center;width:54px;height:54px;flex:none;border-radius:14px;background:var(--green-050);color:var(--green-600);align-self:flex-start}
-.prod__ico svg{width:28px;height:28px}
-.prod__body{flex:1;min-width:0;display:flex;flex-direction:column}
+.prod{display:flex;flex-direction:column;border-radius:var(--radius);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);overflow:hidden;transition:transform .3s var(--ease),border-color .3s,box-shadow .3s}
+.prod:hover{transform:translateY(-5px);border-color:rgba(61,168,30,.4);box-shadow:var(--shadow)}
+.prod__media{aspect-ratio:4/3;background:linear-gradient(160deg,#fff,#eef3ec);display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line-2)}
+.prod__media img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .45s var(--ease)}
+.prod:hover .prod__media img{transform:scale(1.06)}
+.prod__ico{display:grid;place-items:center;width:60px;height:60px;border-radius:16px;background:var(--green-050);color:var(--green-600)}
+.prod__ico svg{width:30px;height:30px}
+.prod__body{padding:14px;flex:1;min-width:0;display:flex;flex-direction:column}
 .prod__cat{font-family:var(--ff-display);font-weight:600;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green-600)}
 .prod__name{font-family:var(--ff-display);font-weight:700;font-size:1.02rem;line-height:1.2;margin:3px 0 8px;color:var(--text)}
 .prod__meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}
@@ -677,9 +680,7 @@ svg{width:100%;height:100%}
   .cat{padding:13px 6px}
   .cat__name{font-size:.72rem}
   .prods{grid-template-columns:1fr 1fr;gap:10px}
-  .prod{flex-direction:column;gap:9px;padding:13px}
-  .prod__ico{width:42px;height:42px}
-  .prod__ico svg{width:22px;height:22px}
+  .prod__body{padding:11px}
   .prod__name{font-size:.92rem}
   .prod__foot{flex-wrap:wrap}
   .prod__add,.prod__quote{flex:1 1 100%;text-align:center}
