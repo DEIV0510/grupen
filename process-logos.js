@@ -1,8 +1,7 @@
-/* GRUPEN — Variantes de logo para el tema CLARO
- * - logo-horizontal.png        : emblema + bloque de texto real (colores originales) → header claro
- * - logo-horizontal-white.png  : igual pero en blanco → bandas verde oscuro
- * - logo-white.png             : logo completo (stacked) en blanco → footer/CTA oscuros
- * - logo-full.png              : logo completo (stacked) colores originales, fondo transparente
+/* GRUPEN — Variantes de logo (detecta el espacio emblema↔texto)
+ * Corrige la "punta verde" sobre GRUPEN recortando el texto justo bajo el emblema.
+ * - logo-horizontal.png / logo-horizontal-white.png  → header / bandas oscuras
+ * - logo-full.png / logo-white.png                   → loader / footer
  * Ejecutar: NODE_PATH=.../_imgwork/node_modules node process-logos.js
  */
 const sharp = require('sharp');
@@ -32,49 +31,73 @@ async function toWhite(buffer) {
   return sharp(data, { raw: { width: info.width, height: info.height, channels: ch } }).png();
 }
 
-async function run() {
-  const meta = await sharp(SRC).metadata();
-  const H = meta.height, W = meta.width;
+// Encuentra la banda blanca que separa el emblema (arriba) del texto "GRUPEN" (abajo).
+async function findGap() {
+  const { data, info } = await sharp(SRC).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  const green = new Array(height).fill(0);
+  const dark = new Array(height).fill(0);
+  for (let y = 0; y < height; y++) {
+    let g = 0, d = 0;
+    for (let x = 0; x < width; x++) {
+      const i = (y * width + x) * channels;
+      const r = data[i], gr = data[i + 1], b = data[i + 2];
+      if (gr > 100 && gr > r + 25 && gr > b + 25) g++;
+      if (r < 80 && gr < 80 && b < 80) d++;
+    }
+    green[y] = g / width; dark[y] = d / width;
+  }
+  let emblemStart = 0;
+  for (let y = 0; y < height; y++) { if (green[y] > 0.04) { emblemStart = y; break; } }
+  let gap = Math.round(height * 0.58); // respaldo
+  for (let y = emblemStart + 12; y < height - 8; y++) {
+    let white = true;
+    for (let k = 0; k < 7; k++) { if (green[y + k] > 0.004 || dark[y + k] > 0.004) { white = false; break; } }
+    if (white) { gap = y; break; }
+  }
+  return { height, width, emblemStart, gap };
+}
 
-  // --- Emblema (porción superior) ---
-  const embTop = await sharp(SRC).extract({ left: 0, top: 0, width: W, height: Math.round(H * 0.57) }).png().toBuffer();
+async function run() {
+  const { height, gap, emblemStart } = await findGap();
+  console.log('  altura=' + height + ' emblemStart=' + emblemStart + ' gap(separación)=' + gap + ' (' + Math.round(gap / height * 100) + '%)');
+
+  // Emblema: de arriba hasta la separación (incluye su punta, SIN texto)
+  const embTop = await sharp(SRC).extract({ left: 0, top: 0, width: (await sharp(SRC).metadata()).width, height: gap }).png().toBuffer();
   const embTrim = await sharp(embTop).trim({ threshold: 12 }).png().toBuffer();
   const emblem = await (await whiteToTransparent(embTrim)).png().toBuffer();
+  await sharp(emblem).resize({ height: 560, withoutEnlargement: false }).toFile(path.join(BRAND, 'emblem.png'));
 
-  // --- Bloque de texto (porción inferior: GRUPEN + tagline) ---
-  const txtTop = Math.round(H * 0.57);
-  const txtCrop = await sharp(SRC).extract({ left: 0, top: txtTop, width: W, height: H - txtTop }).png().toBuffer();
+  // Texto: desde la separación hacia abajo (GRUPEN + tagline, SIN emblema)
+  const meta = await sharp(SRC).metadata();
+  const txtCrop = await sharp(SRC).extract({ left: 0, top: gap, width: meta.width, height: meta.height - gap }).png().toBuffer();
   const txtTrim = await sharp(txtCrop).trim({ threshold: 12 }).png().toBuffer();
   const textBlock = await (await whiteToTransparent(txtTrim)).png().toBuffer();
 
-  // --- Composición horizontal: emblema | texto ---
-  const EH = 132;               // alto del emblema
+  // Composición horizontal: emblema | texto
+  const EH = 132;
   const embR = await sharp(emblem).resize({ height: EH }).png().toBuffer();
   const em = await sharp(embR).metadata();
-  const tm0 = await sharp(textBlock).metadata();
-  const TH = Math.round(EH * (tm0.height / tm0.height) * 0.74); // texto ~74% del alto del emblema
-  const txtR = await sharp(textBlock).resize({ height: TH }).png().toBuffer();
+  const txtR = await sharp(textBlock).resize({ height: Math.round(EH * 0.74) }).png().toBuffer();
   const tm = await sharp(txtR).metadata();
-  const gap = 28;
-  const cW = em.width + gap + tm.width;
+  const gapX = 28;
+  const cW = em.width + gapX + tm.width;
   const cH = Math.max(em.height, tm.height);
-
   const horiz = await sharp({ create: { width: cW, height: cH, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
     .composite([
       { input: embR, left: 0, top: Math.round((cH - em.height) / 2) },
-      { input: txtR, left: em.width + gap, top: Math.round((cH - tm.height) / 2) }
+      { input: txtR, left: em.width + gapX, top: Math.round((cH - tm.height) / 2) }
     ]).png().toBuffer();
   await sharp(horiz).toFile(path.join(BRAND, 'logo-horizontal.png'));
   await (await toWhite(horiz)).toFile(path.join(BRAND, 'logo-horizontal-white.png'));
-  console.log('  logo-horizontal (color + white) listo:', cW + 'x' + cH);
+  console.log('  logo-horizontal (color + white) ' + cW + 'x' + cH);
 
-  // --- Logo completo stacked (color + blanco) ---
+  // Logo completo stacked (color + blanco)
   const fullTrim = await sharp(SRC).trim({ threshold: 12 }).png().toBuffer();
   const fullTransp = await (await whiteToTransparent(fullTrim)).png().toBuffer();
   await sharp(fullTransp).resize({ width: 540 }).toFile(path.join(BRAND, 'logo-full.png'));
   await (await toWhite(fullTransp)).resize({ width: 540 }).toFile(path.join(BRAND, 'logo-white.png'));
   console.log('  logo-full + logo-white listos');
-
   console.log('TODO LISTO ✓');
 }
 run().catch(e => { console.error(e); process.exit(1); });
