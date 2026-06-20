@@ -279,53 +279,227 @@
   }
 
   /* =======================================================
-     8. CATÁLOGO — filtros
+     8. CATÁLOGO escalable: categorías + buscador + productos
      ======================================================= */
+  const ICO = {
+    luces:'<path d="M9 18h6m-5 3h4M12 2a7 7 0 0 1 4 12.7c-.6.5-1 .9-1 1.8H9c0-.9-.4-1.3-1-1.8A7 7 0 0 1 12 2Z"/>',
+    muelles:'<path d="M3 8c4-3 14-3 18 0M4 13c4-2.5 12-2.5 16 0M6 18c3-2 9-2 12 0"/>',
+    filtros:'<path d="M6 4h12l-1 3H7L6 4Zm1 3 1.2 13a1 1 0 0 0 1 .9h3.6a1 1 0 0 0 1-.9L17 7M9 11h6M9.4 15h5.2"/>',
+    correas:'<path d="M8 8a8 4 0 1 0 8 0 8 4 0 1 0-8 0ZM6 8v8a8 4 0 0 0 12 0V8"/>',
+    'bombas-freno':'<circle cx="12" cy="13" r="6"/><path d="M12 3v4M10 5h4M12 11v5M10 13.5h4"/>',
+    pastillas:'<rect x="4" y="6" width="16" height="6" rx="2"/><path d="M7 14v4m4-4v4m4-4v4"/>',
+    soporteria:'<path d="M5 4v10a4 4 0 0 0 4 4h9M5 8h6"/><circle cx="19" cy="18" r="2"/>',
+    electrico:'<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/>',
+    'freno-aire':'<circle cx="12" cy="12" r="3"/><path d="M3 8h5m-5 8h5m13-8h-5m5 8h-5M12 3v5m0 8v5"/>',
+    retenedores:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/>',
+    rodamientos:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="6" r="1.2"/><circle cx="12" cy="18" r="1.2"/><circle cx="6" cy="12" r="1.2"/><circle cx="18" cy="12" r="1.2"/>',
+    bombillos:'<path d="M12 2a6 6 0 0 1 3.5 10.9c-.5.4-.5 1.1-.5 2.1H9c0-1 0-1.7-.5-2.1A6 6 0 0 1 12 2ZM9 18h6m-5 3h4"/>',
+    llantas:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v4m0 10v4m9-9h-4M7 12H3"/>',
+    lubricantes:'<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11Z"/>',
+    turbos:'<circle cx="12" cy="12" r="2.6"/><path d="M12 9.4c0-4 5-5 5-5M14.6 12c4 0 5 5 5 5M12 14.6c0 4-5 5-5 5M9.4 12c-4 0-5-5-5-5"/>',
+    otros:'<path d="M14.7 6.3a3.5 3.5 0 0 0-4.5 4.5L4 17l3 3 6.2-6.2a3.5 3.5 0 0 0 4.5-4.5l-2 2-2-2 2-2Z"/>'
+  };
+  const svgIco = id => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICO[id] || ICO.otros) + '</svg>';
+
+  const CATEGORIES = [
+    { id:'luces', name:'Luces' }, { id:'muelles', name:'Hojas de Muelle' },
+    { id:'filtros', name:'Filtros' }, { id:'correas', name:'Correas' },
+    { id:'bombas-freno', name:'Bombas de Freno' }, { id:'pastillas', name:'Pastillas' },
+    { id:'soporteria', name:'Soportería' }, { id:'electrico', name:'Sistema Eléctrico' },
+    { id:'freno-aire', name:'Freno de Aire' }, { id:'retenedores', name:'Retenedores' },
+    { id:'rodamientos', name:'Rodamientos' }, { id:'bombillos', name:'Bombillos' },
+    { id:'llantas', name:'Llantas' }, { id:'lubricantes', name:'Lubricantes' },
+    { id:'turbos', name:'Turbos' }, { id:'otros', name:'Otros Repuestos' }
+  ];
+  const CAT_NAME = {}; CATEGORIES.forEach(c => CAT_NAME[c.id] = c.name);
+
+  // Catálogo escalable: agrega/edita aquí (o cárgalo desde JSON/API a futuro).
+  const PRODUCTS = [
+    { name:'Stop trasero LED 24V', ref:'STL-24', brand:'Hella', cat:'luces' },
+    { name:'Farola delantera halógena', ref:'FH-700', brand:'Hella', cat:'luces' },
+    { name:'Plafón lateral ámbar 24V', ref:'PL-24A', brand:'Multipartes', cat:'luces' },
+    { name:'Stop 3 funciones camión', ref:'ST-3F', brand:'Multipartes', cat:'luces' },
+    { name:'Exploradora LED auxiliar', ref:'EXP-LED', brand:'Hella', cat:'luces' },
+    { name:'Hoja de muelle delantera', ref:'HM-DEL', brand:'Imal', cat:'muelles' },
+    { name:'Paquete de muelle trasero', ref:'PM-TRA', brand:'Imal', cat:'muelles' },
+    { name:'Abrazadera de muelle (U-bolt)', ref:'AB-M', brand:'Imal', cat:'muelles' },
+    { name:'Buje de muelle poliuretano', ref:'BJ-POL', brand:'Imal', cat:'muelles' },
+    { name:'Filtro de aceite motor', ref:'B7299', brand:'Baldwin', cat:'filtros' },
+    { name:'Filtro de aire primario', ref:'PA2823', brand:'Baldwin', cat:'filtros' },
+    { name:'Separador agua/combustible', ref:'FS19763', brand:'Fleetguard', cat:'filtros' },
+    { name:'Filtro de combustible', ref:'FF5320', brand:'Fleetguard', cat:'filtros' },
+    { name:'Filtro de refrigerante', ref:'WF2076', brand:'Fleetguard', cat:'filtros' },
+    { name:'Filtro de aire secundario', ref:'PA2824', brand:'Baldwin', cat:'filtros' },
+    { name:'Correa de accesorios 8PK', ref:'COR-8PK', brand:'Partmo', cat:'correas' },
+    { name:'Correa de distribución', ref:'COR-DT', brand:'Partmo', cat:'correas' },
+    { name:'Correa ventilador', ref:'COR-VEN', brand:'Partmo', cat:'correas' },
+    { name:'Bomba de freno principal', ref:'BF-PR', brand:'Bendix', cat:'bombas-freno' },
+    { name:'Cilindro de rueda', ref:'CR-30', brand:'Incolbestos', cat:'bombas-freno' },
+    { name:'Bomba hidráulica de freno', ref:'BF-HID', brand:'Bendix', cat:'bombas-freno' },
+    { name:'Pastillas de freno delanteras', ref:'PFD-22', brand:'Incolbestos', cat:'pastillas' },
+    { name:'Banda de freno trasera', ref:'BFT-44', brand:'Incolbestos', cat:'pastillas' },
+    { name:'Juego de zapatas', ref:'ZAP-16', brand:'Incolbestos', cat:'pastillas' },
+    { name:'Soporte de motor', ref:'SM-01', brand:'Imal', cat:'soporteria' },
+    { name:'Tijera / soporte de muelle', ref:'TS-M', brand:'Imal', cat:'soporteria' },
+    { name:'Soporte de cabina', ref:'SC-02', brand:'Imal', cat:'soporteria' },
+    { name:'Alternador 24V 80A', ref:'ALT-2480', brand:'Partmo', cat:'electrico' },
+    { name:'Motor de arranque 24V', ref:'ARR-24', brand:'Partmo', cat:'electrico' },
+    { name:'Relay 24V 5 pines', ref:'RL-24', brand:'Hella', cat:'electrico' },
+    { name:'Switch de encendido', ref:'SW-ENC', brand:'Multipartes', cat:'electrico' },
+    { name:'Pulmón de freno 24/30', ref:'PUL-2430', brand:'Bendix', cat:'freno-aire' },
+    { name:'Secador de aire', ref:'SEC-AD', brand:'Bendix', cat:'freno-aire' },
+    { name:'Válvula relay de freno', ref:'VR-FR', brand:'Bendix', cat:'freno-aire' },
+    { name:'Válvula de cuatro vías', ref:'V4V', brand:'Bendix', cat:'freno-aire' },
+    { name:'Gobernador de aire', ref:'GOB-AIR', brand:'Bendix', cat:'freno-aire' },
+    { name:'Retenedor de rueda delantera', ref:'RET-RD', brand:'Víctor', cat:'retenedores' },
+    { name:'Retenedor de cigüeñal', ref:'RET-CG', brand:'SNA', cat:'retenedores' },
+    { name:'Retenedor de corona', ref:'RET-CO', brand:'SNA', cat:'retenedores' },
+    { name:'Rodamiento de rueda', ref:'TIM-RR', brand:'Timken', cat:'rodamientos' },
+    { name:'Cono y copa de rodamiento', ref:'TIM-CC', brand:'Timken', cat:'rodamientos' },
+    { name:'Cruceta de transmisión', ref:'CRU-TX', brand:'Precisión', cat:'rodamientos' },
+    { name:'Bombillo H4 24V', ref:'H4-24', brand:'Hella', cat:'bombillos' },
+    { name:'Bombillo H7 24V', ref:'H7-24', brand:'Hella', cat:'bombillos' },
+    { name:'Bombillo stop 1157 24V', ref:'1157-24', brand:'Multipartes', cat:'bombillos' },
+    { name:'Llanta 295/80 R22.5', ref:'LL-29580', brand:'Varias', cat:'llantas' },
+    { name:'Llanta 11R22.5 direccional', ref:'LL-11R', brand:'Varias', cat:'llantas' },
+    { name:'Aceite motor 15W40', ref:'15W40', brand:'Shell', cat:'lubricantes' },
+    { name:'Aceite caja/transmisión 85W140', ref:'85W140', brand:'Mobil', cat:'lubricantes' },
+    { name:'Refrigerante concentrado', ref:'REF-CON', brand:'Shell', cat:'lubricantes' },
+    { name:'Grasa multipropósito', ref:'GR-MP', brand:'Mobil', cat:'lubricantes' },
+    { name:'Turbo cargador', ref:'TBO-01', brand:'TKL', cat:'turbos' },
+    { name:'Kit de reparación de turbo', ref:'TBO-KIT', brand:'TKL', cat:'turbos' },
+    { name:'Actuador de turbo', ref:'TBO-ACT', brand:'TKL', cat:'turbos' },
+    { name:'Empaque de culata', ref:'EMP-CUL', brand:'Víctor', cat:'otros' },
+    { name:'Kit de empaques de motor', ref:'EMP-KIT', brand:'Víctor', cat:'otros' },
+    { name:'Crucetas y soportes varios', ref:'VAR-01', brand:'Multipartes', cat:'otros' }
+  ];
+
+  let activeCat = 'all', searchQuery = '';
+  const escAttr = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
   function initCatalog() {
-    const chips = $$('.chip');
-    const items = $$('#catalogGrid .product');
-    chips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        chips.forEach(c => c.classList.remove('is-active'));
-        chip.classList.add('is-active');
-        const f = chip.dataset.filter;
-        items.forEach(it => {
-          const show = f === 'all' || it.dataset.cat === f || (f === 'promo' && it.dataset.promo === '1');
-          it.classList.toggle('is-hidden', !show);
-        });
-      });
+    const catsGrid = $('#catsGrid'), prodsGrid = $('#prodsGrid');
+    if (!catsGrid || !prodsGrid) return;
+    const countEl = $('#prodsCount'), emptyEl = $('#prodsEmpty'), resetEl = $('#catReset');
+    const input = $('#searchInput'), clearBtn = $('#searchClear');
+    const counts = {}; PRODUCTS.forEach(p => counts[p.cat] = (counts[p.cat] || 0) + 1);
+
+    catsGrid.innerHTML = CATEGORIES.map(c =>
+      '<button class="cat" type="button" data-cat="' + c.id + '">' +
+      '<span class="cat__ico">' + svgIco(c.id) + '</span>' +
+      '<span class="cat__name">' + c.name + '</span>' +
+      '<span class="cat__n">' + (counts[c.id] || 0) + '</span></button>'
+    ).join('');
+
+    const matches = p => {
+      if (activeCat !== 'all' && p.cat !== activeCat) return false;
+      if (searchQuery) return (p.name + ' ' + p.ref + ' ' + p.brand + ' ' + CAT_NAME[p.cat]).toLowerCase().indexOf(searchQuery) >= 0;
+      return true;
+    };
+    const render = () => {
+      const list = PRODUCTS.filter(matches);
+      prodsGrid.innerHTML = list.map(p =>
+        '<article class="prod">' +
+        '<span class="prod__ico">' + svgIco(p.cat) + '</span>' +
+        '<div class="prod__body">' +
+        '<span class="prod__cat">' + CAT_NAME[p.cat] + '</span>' +
+        '<h4 class="prod__name">' + p.name + '</h4>' +
+        '<div class="prod__meta"><span class="prod__ref">Ref. ' + p.ref + '</span>' + (p.brand ? '<span class="prod__brand">' + p.brand + '</span>' : '') + '</div>' +
+        '<div class="prod__foot">' +
+        '<button class="btn btn--sm btn--primary prod__add" type="button" data-key="' + escAttr(p.ref || p.name) + '">+ Agregar</button>' +
+        '<button class="prod__quote" type="button" data-pn="' + escAttr(p.name) + '" data-pr="' + escAttr(p.ref) + '">Cotizar</button>' +
+        '</div></div></article>'
+      ).join('');
+      if (countEl) countEl.textContent = (activeCat === 'all' && !searchQuery)
+        ? 'Todos los repuestos (' + PRODUCTS.length + ')'
+        : list.length + ' resultado' + (list.length === 1 ? '' : 's') + (activeCat !== 'all' ? ' · ' + CAT_NAME[activeCat] : '');
+      if (emptyEl) emptyEl.hidden = list.length > 0;
+      if (resetEl) resetEl.hidden = activeCat === 'all';
+      $$('.cat', catsGrid).forEach(b => b.classList.toggle('is-active', b.dataset.cat === activeCat));
+    };
+
+    catsGrid.addEventListener('click', e => {
+      const b = e.target.closest('.cat'); if (!b) return;
+      activeCat = (activeCat === b.dataset.cat) ? 'all' : b.dataset.cat;
+      render();
+      const t = $('#catalogo').getBoundingClientRect().top + window.scrollY - 60;
+      window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
     });
+    if (resetEl) resetEl.addEventListener('click', () => { activeCat = 'all'; render(); });
+    if (input) input.addEventListener('input', () => {
+      searchQuery = input.value.trim().toLowerCase();
+      if (clearBtn) clearBtn.hidden = !searchQuery;
+      render();
+    });
+    if (clearBtn) clearBtn.addEventListener('click', () => { input.value = ''; searchQuery = ''; clearBtn.hidden = true; render(); input.focus(); });
+    prodsGrid.addEventListener('click', e => {
+      const add = e.target.closest('.prod__add');
+      if (add) { const p = PRODUCTS.find(x => (x.ref || x.name) === add.dataset.key); if (p) Cart.add(p); return; }
+      const q = e.target.closest('.prod__quote');
+      if (q) window.open(waLink('Hola GRUPEN 👋, quiero cotizar: *' + q.dataset.pn + '* (Ref. ' + q.dataset.pr + '). ¿Disponibilidad para transporte pesado?'), '_blank');
+    });
+    render();
   }
 
   /* =======================================================
-     8b. Realce de productos: chip "Ahorras $X" + tilt 3D
+     8b. CARRITO de cotización → WhatsApp
      ======================================================= */
-  function enhanceProducts() {
-    const grid = $('#catalogGrid'); if (!grid) return;
-    const fmt = new Intl.NumberFormat('es-CO');
-    const cards = $$('.product', grid);
-    cards.forEach(card => {
-      const wasEl = $('.was', card), nowEl = $('.now', card), box = $('.product__price', card);
-      if (!wasEl || !nowEl || !box) return;
-      const was = parseInt(wasEl.textContent.replace(/[^\d]/g, ''), 10);
-      const now = parseInt(nowEl.textContent.replace(/[^\d]/g, ''), 10);
-      if (was > now) {
-        const chip = document.createElement('span');
-        chip.className = 'product__save';
-        chip.textContent = 'Ahorras $' + fmt.format(was - now);
-        box.appendChild(chip);
-      }
+  const Cart = {
+    items: [],
+    load() { try { this.items = JSON.parse(localStorage.getItem('grupen_cart') || '[]'); } catch (e) { this.items = []; } },
+    save() { try { localStorage.setItem('grupen_cart', JSON.stringify(this.items)); } catch (e) {} },
+    count() { return this.items.reduce((n, i) => n + i.qty, 0); },
+    add(p) {
+      const key = p.ref || p.name;
+      const ex = this.items.find(i => i.key === key);
+      if (ex) ex.qty++; else this.items.push({ key, name: p.name, ref: p.ref, brand: p.brand || '', qty: 1 });
+      this.save(); this.render(); this.flash(); this.open();
+    },
+    setQty(key, d) {
+      const it = this.items.find(i => i.key === key); if (!it) return;
+      it.qty += d; if (it.qty <= 0) this.items = this.items.filter(i => i.key !== key);
+      this.save(); this.render();
+    },
+    remove(key) { this.items = this.items.filter(i => i.key !== key); this.save(); this.render(); },
+    clear() { this.items = []; this.save(); this.render(); },
+    flash() { const b = $('#cartBtn'); if (b) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); } },
+    open() { const c = $('#cart'); if (c) { c.classList.add('is-open'); c.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; } },
+    close() { const c = $('#cart'); if (c) { c.classList.remove('is-open'); c.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; } },
+    render() {
+      const n = this.count();
+      const cnt = $('#cartCount'); if (cnt) { cnt.textContent = n; cnt.classList.toggle('is-show', n > 0); }
+      const hc = $('#cartHeadCount'); if (hc) hc.textContent = n;
+      const wrap = $('#cartItems'); if (wrap) wrap.innerHTML = this.items.map(i =>
+        '<div class="citem"><div class="citem__info"><strong>' + i.name + '</strong><span>Ref. ' + i.ref + (i.brand ? ' · ' + i.brand : '') + '</span></div>' +
+        '<div class="citem__qty"><button type="button" data-q="-" data-k="' + escAttr(i.key) + '" aria-label="Menos">&minus;</button><span>' + i.qty + '</span><button type="button" data-q="+" data-k="' + escAttr(i.key) + '" aria-label="Más">+</button></div>' +
+        '<button class="citem__rm" type="button" data-rm="' + escAttr(i.key) + '" aria-label="Quitar">&times;</button></div>'
+      ).join('');
+      const empty = $('#cartEmpty'); if (empty) empty.hidden = this.items.length > 0;
+      const send = $('#cartSend'); if (send) send.disabled = this.items.length === 0;
+    },
+    sendWA() {
+      if (!this.items.length) return;
+      let msg = '🛒 *Solicitud de cotización — GRUPEN*%0A_Repuestos para transporte pesado_%0A%0A';
+      this.items.forEach((i, idx) => { msg += (idx + 1) + '. ' + i.name + ' (Ref. ' + i.ref + ') x' + i.qty + '%0A'; });
+      msg += '%0ATotal de ítems: ' + this.count() + '%0A%0A¿Me confirman disponibilidad y precio? Gracias.';
+      window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + msg, '_blank');
+    }
+  };
+  function initCart() {
+    Cart.load(); Cart.render();
+    const c = $('#cart'); if (!c) return;
+    const on = (sel, fn) => { const el = $(sel); if (el) el.addEventListener('click', fn); };
+    on('#cartBtn', () => Cart.open());
+    on('#cartClose', () => Cart.close());
+    on('#cartOverlay', () => Cart.close());
+    on('#cartClear', () => Cart.clear());
+    on('#cartSend', () => Cart.sendWA());
+    const items = $('#cartItems');
+    if (items) items.addEventListener('click', e => {
+      const q = e.target.closest('[data-q]'); if (q) { Cart.setQty(q.dataset.k, q.dataset.q === '+' ? 1 : -1); return; }
+      const rm = e.target.closest('[data-rm]'); if (rm) Cart.remove(rm.dataset.rm);
     });
-    if (prefersReduced || !window.matchMedia('(pointer:fine)').matches) return;
-    cards.forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = 'perspective(820px) rotateX(' + (-py * 5).toFixed(2) + 'deg) rotateY(' + (px * 6).toFixed(2) + 'deg) translateY(-8px)';
-      });
-      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && c.classList.contains('is-open')) Cart.close(); });
   }
 
   /* =======================================================
@@ -544,7 +718,7 @@
     initParallax();
     initHeroVideo();
     initCatalog();
-    enhanceProducts();
+    initCart();
     initGallery();
     initTestimonials();
     initForm();

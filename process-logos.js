@@ -31,6 +31,16 @@ async function toWhite(buffer) {
   return sharp(data, { raw: { width: info.width, height: info.height, channels: ch } }).png();
 }
 
+// Recolorea todo el logo a un verde corporativo brillante (visible sobre oscuro).
+async function toGreen(buffer, rgb) {
+  const { data, info } = await sharp(buffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const ch = info.channels;
+  for (let i = 0; i < data.length; i += ch) {
+    if (data[i + 3] > 6) { data[i] = rgb[0]; data[i + 1] = rgb[1]; data[i + 2] = rgb[2]; }
+  }
+  return sharp(data, { raw: { width: info.width, height: info.height, channels: ch } }).png();
+}
+
 // Encuentra la banda blanca que separa el emblema (arriba) del texto "GRUPEN" (abajo).
 async function findGap() {
   const { data, info } = await sharp(SRC).removeAlpha().raw().toBuffer({ resolveWithObject: true });
@@ -90,7 +100,8 @@ async function run() {
     ]).png().toBuffer();
   await sharp(horiz).toFile(path.join(BRAND, 'logo-horizontal.png'));
   await (await toWhite(horiz)).toFile(path.join(BRAND, 'logo-horizontal-white.png'));
-  console.log('  logo-horizontal (color + white) ' + cW + 'x' + cH);
+  await (await toGreen(horiz, [92, 198, 55])).toFile(path.join(BRAND, 'logo-horizontal-green.png'));
+  console.log('  logo-horizontal (color + white + green) ' + cW + 'x' + cH);
 
   // Logo completo stacked (color + blanco)
   const fullTrim = await sharp(SRC).trim({ threshold: 12 }).png().toBuffer();
