@@ -309,6 +309,8 @@ svg{width:100%;height:100%}
 .product__save{align-self:flex-start;margin-top:5px;font-family:var(--ff-display);font-weight:700;font-size:.7rem;letter-spacing:.02em;color:#1f7a12;background:rgba(61,168,30,.12);border:1px solid rgba(61,168,30,.28);padding:3px 9px;border-radius:6px}
 .product__foot .btn{flex:none}
 .catalog__more{text-align:center;margin-top:42px}
+.catalog__swipe{display:none;align-items:center;justify-content:center;gap:8px;margin:-16px 0 20px;font-family:var(--ff-display);font-weight:600;font-size:.82rem;color:var(--green-700)}
+.catalog__swipe svg{width:18px;height:18px}
 
 /* Promo "Paga 1 Lleva 2" */
 .catalog__promo-note{display:inline-flex;align-items:center;gap:9px;margin-top:18px;background:linear-gradient(100deg,#fff6e2,#ffe7bd);border:1px solid rgba(232,146,10,.42);color:#8a5a08;font-family:var(--ff-display);font-weight:700;font-size:.94rem;padding:9px 18px;border-radius:100px}
