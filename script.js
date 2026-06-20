@@ -511,9 +511,15 @@
   function initHeroVideo() {
     const v = document.querySelector('.hero__video');
     if (!v) return;
-    if (prefersReduced) { v.removeAttribute('autoplay'); try { v.pause(); } catch (e) {} return; }
+    v.muted = true; v.defaultMuted = true; v.setAttribute('muted', ''); // requisito para autoplay
     const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
-    if (v.readyState >= 2) tryPlay(); else v.addEventListener('canplay', tryPlay, { once: true });
+    tryPlay();
+    v.addEventListener('loadeddata', tryPlay, { once: true });
+    v.addEventListener('canplay', tryPlay, { once: true });
+    // Si el navegador bloquea el autoplay, arrancar al primer gesto del usuario
+    const evs = ['pointerdown', 'touchstart', 'scroll', 'keydown'];
+    const kick = () => { tryPlay(); evs.forEach(ev => window.removeEventListener(ev, kick)); };
+    evs.forEach(ev => window.addEventListener(ev, kick, { passive: true }));
   }
 
   /* =======================================================
