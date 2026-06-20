@@ -61,6 +61,10 @@ Para regenerar las imágenes optimizadas desde la carpeta fuente:
 NODE_PATH=<ruta a node_modules con sharp> node process-images.js
 ```
 
+## 🔄 Subida automática al repositorio
+
+Para que **cada cambio se suba solo** a GitHub, haz doble clic en **`auto-subir.bat`** (o ejecuta `node autopush.js`). Deja la ventana abierta: vigila la carpeta y hace `git add/commit/push` automáticamente unos segundos después de cada cambio. Ciérrala para detenerlo.
+
 ---
 
 © GRUPEN – Grupo Empresarial de Negocios. Todos los derechos reservados.
