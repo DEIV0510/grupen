@@ -505,17 +505,27 @@ svg{width:100%;height:100%}
   .finder__copy .section__title{text-align:left}
 }
 @media(max-width:680px){
-  .why__grid{grid-template-columns:1fr}
-  .catalog__grid{grid-template-columns:repeat(2,1fr)}
+  .section{padding:48px 0}
+  .section__head{margin-bottom:26px}
+  .hero{padding-top:104px;padding-bottom:46px}
+  .hero__trust{gap:8px 16px}
+  /* Catálogo: carrusel horizontal deslizable (acorta mucho el scroll) */
+  .catalog__grid{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px 16px;scroll-padding-left:2px}
+  .catalog__grid .product{flex:0 0 78%;scroll-snap-align:center}
+  .product:hover{transform:none}
+  .catalog__swipe{display:flex}
+  /* Beneficios y formulario compactos */
+  .why__grid{grid-template-columns:1fr;gap:12px}
+  .why__card{padding:18px}
+  .why__icon{width:46px;height:46px;margin-bottom:12px}
   .finder__form{grid-template-columns:1fr}
-  .hero__trust{gap:10px 18px}
 }
 @media(max-width:480px){
-  .section{padding:54px 0}
-  .catalog__grid{grid-template-columns:1fr}
-  .process__grid{grid-template-columns:1fr;gap:22px}
+  .section{padding:42px 0}
+  .process__grid{grid-template-columns:repeat(2,1fr);gap:18px}
   .hero__cta .btn{flex:1 1 100%}
   .stats__grid{grid-template-columns:repeat(2,1fr)}
+  .footer__grid{gap:26px}
   .fab{width:54px;height:54px;right:16px;bottom:16px}
   .totop{right:18px;bottom:80px}
 }
