@@ -311,20 +311,21 @@
     { id:'llantas', name:'Llantas' }, { id:'lubricantes', name:'Lubricantes' },
     { id:'turbos', name:'Turbos' }, { id:'otros', name:'Otros Repuestos' }
   ];
-  const CAT_NAME = {}; CATEGORIES.forEach(c => CAT_NAME[c.id] = c.name);
+  const CAT_NAME = {}; CATEGORIES.forEach(c => CAT_NAME[c.id] = c.name); CAT_NAME.promo = 'Paga 1 Lleva 2';
+  const GIFT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v8H4v-8M2 8h20v4H2zM12 8V4M12 8H8.4a2.4 2.4 0 0 1 0-4.8C10.8 3.2 12 8 12 8Zm0 0h3.6a2.4 2.4 0 0 0 0-4.8C13.2 3.2 12 8 12 8Zm0 0v12"/></svg>';
 
   // Catálogo escalable: agrega/edita aquí (o cárgalo desde JSON/API a futuro).
   // SOLO productos reales enviados por el cliente (con foto). Agrega aquí los nuevos.
   const PRODUCTS = [
-    { name:'Faro Sellado Halógeno H4651', ref:'H4651', brand:'Wagner', cat:'luces', img:'assets/products/lampara1.webp' },
-    { name:'Faro Halógeno H6054 Alto/Bajo', ref:'H6054', brand:'Wagner', cat:'luces', img:'assets/products/lampara3.webp' },
-    { name:'Faro Sellado Stanley', ref:'Sealed Beam', brand:'Stanley', cat:'luces', img:'assets/products/lampara2.webp' },
-    { name:'Stop Toyota Land Cruiser', ref:'STOP-TOY', brand:'', cat:'luces', img:'assets/products/stop1.webp' },
+    { name:'Faro Sellado Halógeno H4651', ref:'H4651', brand:'Wagner', cat:'luces', img:'assets/products/lampara1.webp', promo:true },
+    { name:'Faro Halógeno H6054 Alto/Bajo', ref:'H6054', brand:'Wagner', cat:'luces', img:'assets/products/lampara3.webp', promo:true },
+    { name:'Faro Sellado Stanley', ref:'Sealed Beam', brand:'Stanley', cat:'luces', img:'assets/products/lampara2.webp', promo:true },
+    { name:'Stop Toyota Land Cruiser', ref:'STOP-TOY', brand:'', cat:'luces', img:'assets/products/stop1.webp', promo:true },
     { name:'Stop Daihatsu 4-105', ref:'4-105', brand:'Multipartes', cat:'luces', img:'assets/products/stop2.webp' },
     { name:'Stop Renault 6', ref:'4-95', brand:'Multipartes', cat:'luces', img:'assets/products/stop3.webp' },
     { name:'Stop Chevrolet Chevette', ref:'STOP-CHEV', brand:'', cat:'luces', img:'assets/products/stop4.webp' },
     { name:'Lámpara Triple Cromada', ref:'LT-CROM', brand:'', cat:'luces', img:'assets/products/stop5.webp' },
-    { name:'Stop Chevrolet LUV 1600', ref:'4-117', brand:'Multipartes', cat:'luces', img:'assets/products/stop6.webp' },
+    { name:'Stop Chevrolet LUV 1600', ref:'4-117', brand:'Multipartes', cat:'luces', img:'assets/products/stop6.webp', promo:true },
     { name:'Lámpara Stop Renault 4', ref:'R-4-72', brand:'', cat:'luces', img:'assets/products/stop7.webp' },
     { name:'Tapa Distribuidor Denso EDC-72', ref:'EDC-72', brand:'Valley Forge', cat:'electrico', img:'assets/products/tapadistribuidor.webp' },
     { name:'Tapa Distribuidor Chrysler DC-85', ref:'DC-85', brand:'Valley Forge', cat:'electrico', img:'assets/products/tapadistribuidor2.webp' },
@@ -345,7 +346,9 @@
     const input = $('#searchInput'), clearBtn = $('#searchClear');
     const counts = {}; PRODUCTS.forEach(p => counts[p.cat] = (counts[p.cat] || 0) + 1);
 
-    catsGrid.innerHTML = CATEGORIES.map(c =>
+    const promoN = PRODUCTS.filter(p => p.promo).length;
+    const promoCard = promoN ? '<button class="cat cat--promo" type="button" data-cat="promo"><span class="cat__ico">' + GIFT + '</span><span class="cat__name">Ofertas 2×1</span><span class="cat__n">' + promoN + '</span></button>' : '';
+    catsGrid.innerHTML = promoCard + CATEGORIES.map(c =>
       '<button class="cat" type="button" data-cat="' + c.id + '">' +
       '<span class="cat__ico">' + svgIco(c.id) + '</span>' +
       '<span class="cat__name">' + c.name + '</span>' +
@@ -353,15 +356,16 @@
     ).join('');
 
     const matches = p => {
-      if (activeCat !== 'all' && p.cat !== activeCat) return false;
+      if (activeCat === 'promo') { if (!p.promo) return false; }
+      else if (activeCat !== 'all' && p.cat !== activeCat) return false;
       if (searchQuery) return (p.name + ' ' + p.ref + ' ' + p.brand + ' ' + CAT_NAME[p.cat]).toLowerCase().indexOf(searchQuery) >= 0;
       return true;
     };
     const render = () => {
       const list = PRODUCTS.filter(matches);
       prodsGrid.innerHTML = list.map(p =>
-        '<article class="prod">' +
-        '<div class="prod__media">' + (p.img ? '<img src="' + p.img + '" alt="' + escAttr(p.name) + '" loading="lazy" decoding="async">' : '<span class="prod__ico">' + svgIco(p.cat) + '</span>') + '</div>' +
+        '<article class="prod' + (p.promo ? ' prod--promo' : '') + '">' +
+        '<div class="prod__media">' + (p.img ? '<img src="' + p.img + '" alt="' + escAttr(p.name) + '" loading="lazy" decoding="async">' : '<span class="prod__ico">' + svgIco(p.cat) + '</span>') + (p.promo ? '<span class="prod__promo2x1"><b>2&times;1</b> Paga 1 Lleva 2</span>' : '') + '</div>' +
         '<div class="prod__body">' +
         '<span class="prod__cat">' + CAT_NAME[p.cat] + '</span>' +
         '<h4 class="prod__name">' + p.name + '</h4>' +
@@ -387,6 +391,16 @@
       window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
     });
     if (resetEl) resetEl.addEventListener('click', () => { activeCat = 'all'; render(); });
+    const verOf = document.getElementById('verOfertas');
+    if (verOf) verOf.addEventListener('click', e => {
+      e.preventDefault();
+      activeCat = 'promo';
+      if (input) { input.value = ''; searchQuery = ''; }
+      if (clearBtn) clearBtn.hidden = true;
+      render();
+      const t = $('#catalogo').getBoundingClientRect().top + window.scrollY - 60;
+      window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
+    });
     if (input) input.addEventListener('input', () => {
       searchQuery = input.value.trim().toLowerCase();
       if (clearBtn) clearBtn.hidden = !searchQuery;

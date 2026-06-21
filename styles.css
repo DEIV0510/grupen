@@ -531,6 +531,38 @@ svg{width:100%;height:100%}
 .findbox__txt span{color:var(--muted);font-size:.95rem}
 
 /* =========================================================
+   OFERTA "PAGA 1 LLEVA 2" (2x1) — banner + filtro + badge
+   ========================================================= */
+.promo2x1{display:flex;align-items:center;gap:clamp(16px,3vw,30px);margin:0 0 28px;padding:22px clamp(20px,3vw,34px);border-radius:var(--radius-lg);position:relative;overflow:hidden;background:linear-gradient(120deg,#0e2a16 0%,#1c6b32 52%,#0e2a16 100%);box-shadow:0 22px 50px -22px rgba(14,42,22,.7);color:#fff;text-decoration:none;flex-wrap:wrap;justify-content:center}
+.promo2x1::before{content:"";position:absolute;inset:0;background:radial-gradient(55% 130% at 16% 50%,rgba(245,166,35,.4),transparent 60%);pointer-events:none}
+.promo2x1__shine{position:absolute;top:0;bottom:0;left:-35%;width:28%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.3),transparent);transform:skewX(-18deg);animation:promoShine 3.8s ease-in-out infinite;pointer-events:none}
+@keyframes promoShine{0%{left:-35%}55%,100%{left:135%}}
+.promo2x1__badge{position:relative;z-index:1;flex:none;display:inline-flex;align-items:baseline;justify-content:center;width:88px;height:88px;border-radius:50%;background:linear-gradient(140deg,#ffd35a,#e8920a);color:#3a2606;font-family:var(--ff-display);box-shadow:0 8px 26px -6px rgba(232,146,10,.85),0 0 0 6px rgba(255,255,255,.12);animation:promoPulseBig 2s ease-in-out infinite}
+.promo2x1__badge b{font-size:2.3rem;font-weight:800;line-height:1}
+.promo2x1__badge i{font-size:1.1rem;font-style:normal;opacity:.85;font-weight:800;padding:0 1px}
+@keyframes promoPulseBig{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.promo2x1__text{position:relative;z-index:1;flex:1 1 280px;display:flex;flex-direction:column;gap:3px;align-items:flex-start;text-align:left}
+.promo2x1__eyebrow{font-family:var(--ff-display);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#ffd35a}
+.promo2x1__title{font-family:var(--ff-display);font-weight:800;font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.02;color:#fff}
+.promo2x1__sub{color:rgba(255,255,255,.84);font-size:.92rem;max-width:44ch}
+.promo2x1__cta{position:relative;z-index:1;flex:none;display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--green-ink);font-family:var(--ff-display);font-weight:800;font-size:.95rem;padding:13px 22px;border-radius:100px;box-shadow:0 10px 24px -10px rgba(0,0,0,.5);transition:transform .25s var(--ease),background .25s}
+.promo2x1__cta svg{width:1.1em;height:1.1em}
+.promo2x1:hover .promo2x1__cta{background:#ffd35a;transform:translateX(3px)}
+
+.cat--promo{background:linear-gradient(140deg,#fff6e2,#ffe7bd);border-color:rgba(232,146,10,.5)}
+.cat--promo .cat__ico,.cat--promo:hover .cat__ico,.cat--promo.is-active .cat__ico{background:linear-gradient(140deg,#ffd35a,#e8920a);color:#3a2606}
+.cat--promo .cat__name{color:#8a5a08}
+.cat--promo .cat__n{background:#e8920a;color:#fff;padding:1px 7px;border-radius:100px}
+.cat--promo.is-active{border-color:#e8920a;box-shadow:0 0 0 1px #e8920a,var(--shadow)}
+
+.prod__media{position:relative}
+.prod--promo{border-color:rgba(232,146,10,.55)}
+.prod--promo .prod__media{background:linear-gradient(160deg,#fffaf0,#ffe9c6)}
+.prod__promo2x1{position:absolute;top:10px;left:10px;z-index:2;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(100deg,#ffd35a,#e8920a);color:#3a2606;font-family:var(--ff-display);font-weight:800;font-size:.7rem;padding:5px 9px 5px 5px;border-radius:8px;box-shadow:0 6px 16px -5px rgba(232,146,10,.85);animation:promoBadgePulse 2s ease-in-out infinite}
+.prod__promo2x1 b{font-size:.86rem;background:#3a2606;color:#ffd35a;padding:2px 6px;border-radius:5px;line-height:1}
+@keyframes promoBadgePulse{0%,100%{box-shadow:0 6px 16px -5px rgba(232,146,10,.85)}50%{box-shadow:0 8px 22px -3px rgba(232,146,10,1),0 0 0 4px rgba(245,166,35,.28)}}
+
+/* =========================================================
    MARCAS ALIADAS
    ========================================================= */
 .brands{background:var(--bg-soft)}
