@@ -8,11 +8,11 @@
      ⚙️  CONFIGURACIÓN  —  EDITA AQUÍ TUS DATOS REALES
      ======================================================= */
   const CONFIG = {
-    whatsapp: '573000000000',           // ← número de WhatsApp (formato internacional, sin + ni espacios)
-    phone:    '+57 300 000 0000',       // ← teléfono visible / para llamadas
+    whatsapp: '573007093089',           // ← número de WhatsApp (formato internacional, sin + ni espacios)
+    phone:    '+57 300 709 3089',       // ← teléfono visible / para llamadas
     email:    'ventas@grupen.com.co',   // ← correo de contacto
     city:     'Colombia',               // ← ciudad / ubicación
-    waGreeting: 'Hola GRUPEN 👋, estoy interesado en repuestos para transporte pesado.',
+    waGreeting: 'Hola GRUPEN Almacén 👋, estoy interesado en repuestos para mi vehículo.',
     social: {                           // ← enlaces de redes (deja '#' si aún no tienes)
       facebook:  '#',
       instagram: '#',
@@ -309,32 +309,16 @@
     { id:'freno-aire', name:'Freno de Aire' }, { id:'retenedores', name:'Retenedores' },
     { id:'rodamientos', name:'Rodamientos' }, { id:'bombillos', name:'Bombillos' },
     { id:'llantas', name:'Llantas' }, { id:'lubricantes', name:'Lubricantes' },
-    { id:'turbos', name:'Turbos' }, { id:'otros', name:'Otros Repuestos' }
+    { id:'otros', name:'Otros Repuestos' }
   ];
   const CAT_NAME = {}; CATEGORIES.forEach(c => CAT_NAME[c.id] = c.name); CAT_NAME.promo = 'Paga 1 Lleva 2';
   const GIFT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v8H4v-8M2 8h20v4H2zM12 8V4M12 8H8.4a2.4 2.4 0 0 1 0-4.8C10.8 3.2 12 8 12 8Zm0 0h3.6a2.4 2.4 0 0 0 0-4.8C13.2 3.2 12 8 12 8Zm0 0v12"/></svg>';
 
-  // Catálogo escalable: agrega/edita aquí (o cárgalo desde JSON/API a futuro).
-  // SOLO productos reales enviados por el cliente (con foto). Agrega aquí los nuevos.
-  const PRODUCTS = [
-    { name:'Faro Sellado Halógeno H4651', ref:'H4651', brand:'Wagner', cat:'luces', img:'assets/products/lampara1.webp', promo:true },
-    { name:'Faro Halógeno H6054 Alto/Bajo', ref:'H6054', brand:'Wagner', cat:'luces', img:'assets/products/lampara3.webp', promo:true },
-    { name:'Faro Sellado Stanley', ref:'Sealed Beam', brand:'Stanley', cat:'luces', img:'assets/products/lampara2.webp', promo:true },
-    { name:'Stop Toyota Land Cruiser', ref:'STOP-TOY', brand:'', cat:'luces', img:'assets/products/stop1.webp', promo:true },
-    { name:'Stop Daihatsu 4-105', ref:'4-105', brand:'Multipartes', cat:'luces', img:'assets/products/stop2.webp' },
-    { name:'Stop Renault 6', ref:'4-95', brand:'Multipartes', cat:'luces', img:'assets/products/stop3.webp' },
-    { name:'Stop Chevrolet Chevette', ref:'STOP-CHEV', brand:'', cat:'luces', img:'assets/products/stop4.webp' },
-    { name:'Lámpara Triple Cromada', ref:'LT-CROM', brand:'', cat:'luces', img:'assets/products/stop5.webp' },
-    { name:'Stop Chevrolet LUV 1600', ref:'4-117', brand:'Multipartes', cat:'luces', img:'assets/products/stop6.webp', promo:true },
-    { name:'Lámpara Stop Renault 4', ref:'R-4-72', brand:'', cat:'luces', img:'assets/products/stop7.webp' },
-    { name:'Tapa Distribuidor Denso EDC-72', ref:'EDC-72', brand:'Valley Forge', cat:'electrico', img:'assets/products/tapadistribuidor.webp' },
-    { name:'Tapa Distribuidor Chrysler DC-85', ref:'DC-85', brand:'Valley Forge', cat:'electrico', img:'assets/products/tapadistribuidor2.webp' },
-    { name:'Tapa Distribuidor DR-450', ref:'DR-450', brand:'Standard', cat:'electrico', img:'assets/products/tapadistribuidor3.webp' },
-    { name:'Switch de Encendido MAX', ref:'SW-MAX', brand:'MAX', cat:'electrico', img:'assets/products/llaves2.webp' },
-    { name:'Switch de Encendido Ford Truck', ref:'16-40X', brand:'', cat:'electrico', img:'assets/products/llaves3.webp' },
-    { name:'Switch de Encendido con Llaves', ref:'SW-ENC', brand:'', cat:'electrico', img:'assets/products/llaves4.webp' },
-    { name:'Switches de Encendido (surtido)', ref:'LS-40X', brand:'Valley Forge', cat:'electrico', img:'assets/products/llaves1.webp' }
-  ];
+  // 📦 EL INVENTARIO VIVE EN  productos.js  (window.GRUPEN_PRODUCTS).
+  // Para agregar/quitar repuestos edita ESE archivo, no este. Aquí solo se carga.
+  const PRODUCTS = (window.GRUPEN_PRODUCTS && window.GRUPEN_PRODUCTS.length)
+    ? window.GRUPEN_PRODUCTS
+    : [];
 
   let activeCat = 'all', searchQuery = '';
   const escAttr = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -411,7 +395,7 @@
       const add = e.target.closest('.prod__add');
       if (add) { const p = PRODUCTS.find(x => (x.ref || x.name) === add.dataset.key); if (p) Cart.add(p); return; }
       const q = e.target.closest('.prod__quote');
-      if (q) window.open(waLink('Hola GRUPEN 👋, quiero cotizar: *' + q.dataset.pn + '* (Ref. ' + q.dataset.pr + '). ¿Disponibilidad para transporte pesado?'), '_blank');
+      if (q) window.open(waLink('Hola GRUPEN 👋, quiero cotizar: *' + q.dataset.pn + '* (Ref. ' + q.dataset.pr + '). ¿Tienen disponibilidad?'), '_blank');
     });
     render();
   }
@@ -454,7 +438,7 @@
     },
     sendWA() {
       if (!this.items.length) return;
-      let msg = '🛒 *Solicitud de cotización — GRUPEN*%0A_Repuestos para transporte pesado_%0A%0A';
+      let msg = '🛒 *Solicitud de cotización — GRUPEN Almacén*%0A_Repuestos para vehículos (livianos y pesados)_%0A%0A';
       this.items.forEach((i, idx) => { msg += (idx + 1) + '. ' + i.name + ' (Ref. ' + i.ref + ') x' + i.qty + '%0A'; });
       msg += '%0ATotal de ítems: ' + this.count() + '%0A%0A¿Me confirman disponibilidad y precio? Gracias.';
       window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + msg, '_blank');
