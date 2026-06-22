@@ -519,6 +519,11 @@ svg{width:100%;height:100%}
 .prod__meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}
 .prod__ref{font-size:.72rem;color:var(--muted);background:var(--bg-soft);border:1px solid var(--line);padding:2px 8px;border-radius:6px;font-family:var(--ff-display);font-weight:600}
 .prod__brand{font-size:.72rem;color:var(--green-700);background:var(--green-050);border:1px solid rgba(61,168,30,.22);padding:2px 8px;border-radius:6px;font-family:var(--ff-display);font-weight:700}
+.prod__price{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:2px 0 14px}
+.prod__old{font-size:.85rem;color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(0,0,0,.3)}
+.prod__now{font-family:var(--ff-display);font-weight:800;font-size:1.3rem;line-height:1;color:var(--green-600)}
+.prod__off{position:absolute;top:10px;left:10px;z-index:2;display:inline-flex;align-items:center;background:var(--green-600);color:#fff;font-family:var(--ff-display);font-weight:800;font-size:.82rem;letter-spacing:.3px;padding:5px 9px;border-radius:8px;box-shadow:0 6px 16px -6px rgba(0,0,0,.45)}
+.prod__off--hot{background:linear-gradient(100deg,#ffd35a,#e8920a);color:#3a2606;box-shadow:0 6px 16px -5px rgba(232,146,10,.85);animation:promoBadgePulse 2s ease-in-out infinite}
 .prod__foot{display:flex;align-items:center;gap:8px;margin-top:auto}
 .prod__add{flex:1}
 .prod__quote{font-family:var(--ff-display);font-weight:700;font-size:.82rem;color:var(--green-700);padding:9px 12px;border-radius:100px;border:1px solid rgba(61,168,30,.32);transition:background .2s}
@@ -606,6 +611,7 @@ svg{width:100%;height:100%}
 .citem__info{flex:1;min-width:0;display:flex;flex-direction:column}
 .citem__info strong{font-family:var(--ff-display);font-weight:700;font-size:.94rem;color:var(--text);line-height:1.2}
 .citem__info span{font-size:.78rem;color:var(--muted)}
+.citem__info .citem__price{font-size:.82rem;color:var(--green-600);font-weight:700;margin-top:3px}
 .citem__qty{display:flex;align-items:center;gap:8px;flex:none}
 .citem__qty button{width:28px;height:28px;border-radius:8px;background:var(--bg-soft);border:1px solid var(--line);font-size:1rem;color:var(--text);display:grid;place-items:center}
 .citem__qty button:hover{background:var(--green-050);color:var(--green-700)}
@@ -613,6 +619,9 @@ svg{width:100%;height:100%}
 .citem__rm{width:28px;height:28px;border-radius:8px;color:var(--muted-2);font-size:1.3rem;line-height:1;flex:none}
 .citem__rm:hover{color:#e23b3b}
 .cart__foot{padding:18px 22px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.cart__total{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.cart__total span{font-size:.88rem;color:var(--muted)}
+.cart__total strong{font-family:var(--ff-display);font-weight:800;font-size:1.45rem;color:var(--green-600)}
 .cart__note{font-size:.78rem;color:var(--muted-2);text-align:center}
 .cart__clear{font-family:var(--ff-display);font-weight:600;font-size:.85rem;color:var(--muted);padding:6px}
 .cart__clear:hover{color:#e23b3b}

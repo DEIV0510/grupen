@@ -297,21 +297,24 @@
     llantas:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v4m0 10v4m9-9h-4M7 12H3"/>',
     lubricantes:'<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11Z"/>',
     turbos:'<circle cx="12" cy="12" r="2.6"/><path d="M12 9.4c0-4 5-5 5-5M14.6 12c4 0 5 5 5 5M12 14.6c0 4-5 5-5 5M9.4 12c-4 0-5-5-5-5"/>',
+    embrague:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/><path d="M12 4v3.2M12 16.8V20M4 12h3.2M16.8 12H20"/>',
+    direccion:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M12 3.2v6.4M5.1 16.5l5.2-3M18.9 16.5l-5.2-3"/>',
     otros:'<path d="M14.7 6.3a3.5 3.5 0 0 0-4.5 4.5L4 17l3 3 6.2-6.2a3.5 3.5 0 0 0 4.5-4.5l-2 2-2-2 2-2Z"/>'
   };
   const svgIco = id => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICO[id] || ICO.otros) + '</svg>';
 
   const CATEGORIES = [
-    { id:'luces', name:'Luces' }, { id:'muelles', name:'Hojas de Muelle' },
-    { id:'filtros', name:'Filtros' }, { id:'correas', name:'Correas' },
-    { id:'bombas-freno', name:'Bombas de Freno' }, { id:'pastillas', name:'Pastillas' },
-    { id:'soporteria', name:'Soportería' }, { id:'electrico', name:'Sistema Eléctrico' },
-    { id:'freno-aire', name:'Freno de Aire' }, { id:'retenedores', name:'Retenedores' },
-    { id:'rodamientos', name:'Rodamientos' }, { id:'bombillos', name:'Bombillos' },
+    { id:'filtros', name:'Filtros' }, { id:'electrico', name:'Sistema Eléctrico' },
+    { id:'embrague', name:'Embrague' }, { id:'bombas-freno', name:'Bombas de Freno' },
+    { id:'freno-aire', name:'Freno de Aire' }, { id:'soporteria', name:'Soportería' },
+    { id:'muelles', name:'Hojas de Muelle' }, { id:'luces', name:'Luces' },
+    { id:'bombillos', name:'Bombillos' }, { id:'direccion', name:'Dirección' },
+    { id:'pastillas', name:'Pastillas' }, { id:'correas', name:'Correas' },
+    { id:'retenedores', name:'Retenedores' }, { id:'rodamientos', name:'Rodamientos' },
     { id:'llantas', name:'Llantas' }, { id:'lubricantes', name:'Lubricantes' },
     { id:'otros', name:'Otros Repuestos' }
   ];
-  const CAT_NAME = {}; CATEGORIES.forEach(c => CAT_NAME[c.id] = c.name); CAT_NAME.promo = 'Paga 1 Lleva 2';
+  const CAT_NAME = {}; CATEGORIES.forEach(c => CAT_NAME[c.id] = c.name); CAT_NAME.promo = 'Súper Ofertas';
   const GIFT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v8H4v-8M2 8h20v4H2zM12 8V4M12 8H8.4a2.4 2.4 0 0 1 0-4.8C10.8 3.2 12 8 12 8Zm0 0h3.6a2.4 2.4 0 0 0 0-4.8C13.2 3.2 12 8 12 8Zm0 0v12"/></svg>';
 
   // 📦 EL INVENTARIO VIVE EN  productos.js  (window.GRUPEN_PRODUCTS).
@@ -322,6 +325,9 @@
 
   let activeCat = 'all', searchQuery = '';
   const escAttr = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const fmtCOP = n => '$' + Number(n || 0).toLocaleString('es-CO');
+  const pctOff = p => (p.priceOld && p.priceOld > p.price) ? Math.round((1 - p.price / p.priceOld) * 100) : 0;
+  const isHot = p => pctOff(p) >= 45;   // "súper oferta" = 45%+ de descuento
 
   function initCatalog() {
     const catsGrid = $('#catsGrid'), prodsGrid = $('#prodsGrid');
@@ -330,35 +336,38 @@
     const input = $('#searchInput'), clearBtn = $('#searchClear');
     const counts = {}; PRODUCTS.forEach(p => counts[p.cat] = (counts[p.cat] || 0) + 1);
 
-    const promoN = PRODUCTS.filter(p => p.promo).length;
-    const promoCard = promoN ? '<button class="cat cat--promo" type="button" data-cat="promo"><span class="cat__ico">' + GIFT + '</span><span class="cat__name">Ofertas 2×1</span><span class="cat__n">' + promoN + '</span></button>' : '';
-    catsGrid.innerHTML = promoCard + CATEGORIES.map(c =>
+    const promoN = PRODUCTS.filter(isHot).length;
+    const promoCard = promoN ? '<button class="cat cat--promo" type="button" data-cat="promo"><span class="cat__ico">' + GIFT + '</span><span class="cat__name">Súper Ofertas</span><span class="cat__n">' + promoN + '</span></button>' : '';
+    catsGrid.innerHTML = promoCard + CATEGORIES.filter(c => counts[c.id]).map(c =>
       '<button class="cat" type="button" data-cat="' + c.id + '">' +
       '<span class="cat__ico">' + svgIco(c.id) + '</span>' +
       '<span class="cat__name">' + c.name + '</span>' +
-      (counts[c.id] ? '<span class="cat__n">' + counts[c.id] + '</span>' : '') + '</button>'
+      '<span class="cat__n">' + counts[c.id] + '</span></button>'
     ).join('');
 
     const matches = p => {
-      if (activeCat === 'promo') { if (!p.promo) return false; }
+      if (activeCat === 'promo') { if (!isHot(p)) return false; }
       else if (activeCat !== 'all' && p.cat !== activeCat) return false;
       if (searchQuery) return (p.name + ' ' + p.ref + ' ' + p.brand + ' ' + CAT_NAME[p.cat]).toLowerCase().indexOf(searchQuery) >= 0;
       return true;
     };
     const render = () => {
       const list = PRODUCTS.filter(matches);
-      prodsGrid.innerHTML = list.map(p =>
-        '<article class="prod' + (p.promo ? ' prod--promo' : '') + '">' +
-        '<div class="prod__media">' + (p.img ? '<img src="' + p.img + '" alt="' + escAttr(p.name) + '" loading="lazy" decoding="async">' : '<span class="prod__ico">' + svgIco(p.cat) + '</span>') + (p.promo ? '<span class="prod__promo2x1"><b>2&times;1</b> Paga 1 Lleva 2</span>' : '') + '</div>' +
+      prodsGrid.innerHTML = list.map(p => {
+        const off = pctOff(p), hot = off >= 45;
+        return '<article class="prod' + (hot ? ' prod--promo' : '') + '">' +
+        '<div class="prod__media">' + (p.img ? '<img src="' + p.img + '" alt="' + escAttr(p.name) + '" loading="lazy" decoding="async">' : '<span class="prod__ico">' + svgIco(p.cat) + '</span>') +
+        (off ? '<span class="prod__off' + (hot ? ' prod__off--hot' : '') + '">-' + off + '%</span>' : '') + '</div>' +
         '<div class="prod__body">' +
         '<span class="prod__cat">' + CAT_NAME[p.cat] + '</span>' +
         '<h4 class="prod__name">' + p.name + '</h4>' +
-        '<div class="prod__meta"><span class="prod__ref">Ref. ' + p.ref + '</span>' + (p.brand ? '<span class="prod__brand">' + p.brand + '</span>' : '') + '</div>' +
+        '<div class="prod__meta">' + (p.ref ? '<span class="prod__ref">Ref. ' + p.ref + '</span>' : '') + (p.brand ? '<span class="prod__brand">' + p.brand + '</span>' : '') + '</div>' +
+        '<div class="prod__price">' + (p.priceOld ? '<span class="prod__old">' + fmtCOP(p.priceOld) + '</span>' : '') + '<span class="prod__now">' + fmtCOP(p.price) + '</span></div>' +
         '<div class="prod__foot">' +
         '<button class="btn btn--sm btn--primary prod__add" type="button" data-key="' + escAttr(p.ref || p.name) + '">+ Agregar</button>' +
         '<button class="prod__quote" type="button" data-pn="' + escAttr(p.name) + '" data-pr="' + escAttr(p.ref) + '">Cotizar</button>' +
-        '</div></div></article>'
-      ).join('');
+        '</div></div></article>';
+      }).join('');
       if (countEl) countEl.textContent = (activeCat === 'all' && !searchQuery)
         ? 'Productos disponibles'
         : list.length + ' resultado' + (list.length === 1 ? '' : 's') + (activeCat !== 'all' ? ' · ' + CAT_NAME[activeCat] : '');
@@ -408,10 +417,11 @@
     load() { try { this.items = JSON.parse(localStorage.getItem('grupen_cart') || '[]'); } catch (e) { this.items = []; } },
     save() { try { localStorage.setItem('grupen_cart', JSON.stringify(this.items)); } catch (e) {} },
     count() { return this.items.reduce((n, i) => n + i.qty, 0); },
+    total() { return this.items.reduce((s, i) => s + (i.price || 0) * i.qty, 0); },
     add(p) {
       const key = p.ref || p.name;
       const ex = this.items.find(i => i.key === key);
-      if (ex) ex.qty++; else this.items.push({ key, name: p.name, ref: p.ref, brand: p.brand || '', qty: 1 });
+      if (ex) ex.qty++; else this.items.push({ key, name: p.name, ref: p.ref, brand: p.brand || '', price: p.price || 0, qty: 1 });
       this.save(); this.render(); this.flash(); this.open();
     },
     setQty(key, d) {
@@ -429,18 +439,21 @@
       const cnt = $('#cartCount'); if (cnt) { cnt.textContent = n; cnt.classList.toggle('is-show', n > 0); }
       const hc = $('#cartHeadCount'); if (hc) hc.textContent = n;
       const wrap = $('#cartItems'); if (wrap) wrap.innerHTML = this.items.map(i =>
-        '<div class="citem"><div class="citem__info"><strong>' + i.name + '</strong><span>Ref. ' + i.ref + (i.brand ? ' · ' + i.brand : '') + '</span></div>' +
+        '<div class="citem"><div class="citem__info"><strong>' + i.name + '</strong>' +
+        '<span class="citem__sub">' + (i.ref ? 'Ref. ' + i.ref : '') + (i.brand ? (i.ref ? ' · ' : '') + i.brand : '') + '</span>' +
+        (i.price ? '<span class="citem__price">' + fmtCOP(i.price) + ' c/u</span>' : '') + '</div>' +
         '<div class="citem__qty"><button type="button" data-q="-" data-k="' + escAttr(i.key) + '" aria-label="Menos">&minus;</button><span>' + i.qty + '</span><button type="button" data-q="+" data-k="' + escAttr(i.key) + '" aria-label="Más">+</button></div>' +
         '<button class="citem__rm" type="button" data-rm="' + escAttr(i.key) + '" aria-label="Quitar">&times;</button></div>'
       ).join('');
+      const tot = $('#cartTotal'); if (tot) tot.textContent = fmtCOP(this.total());
       const empty = $('#cartEmpty'); if (empty) empty.hidden = this.items.length > 0;
       const send = $('#cartSend'); if (send) send.disabled = this.items.length === 0;
     },
     sendWA() {
       if (!this.items.length) return;
       let msg = '🛒 *Solicitud de cotización — GRUPEN Almacén*%0A_Repuestos para vehículos (livianos y pesados)_%0A%0A';
-      this.items.forEach((i, idx) => { msg += (idx + 1) + '. ' + i.name + ' (Ref. ' + i.ref + ') x' + i.qty + '%0A'; });
-      msg += '%0ATotal de ítems: ' + this.count() + '%0A%0A¿Me confirman disponibilidad y precio? Gracias.';
+      this.items.forEach((i, idx) => { msg += (idx + 1) + '. ' + i.name + (i.ref ? ' (Ref. ' + i.ref + ')' : '') + ' x' + i.qty + (i.price ? ' — ' + fmtCOP(i.price * i.qty) : '') + '%0A'; });
+      msg += '%0A*Total estimado: ' + fmtCOP(this.total()) + '*%0A(' + this.count() + ' ítem' + (this.count() === 1 ? '' : 's') + ')%0A%0A¿Me confirman disponibilidad? Gracias.';
       window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + msg, '_blank');
     }
   };
