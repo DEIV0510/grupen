@@ -657,7 +657,7 @@ svg{width:100%;height:100%}
   .catalog__grid{grid-template-columns:repeat(3,1fr)}
   .process__grid{grid-template-columns:repeat(2,1fr);gap:30px}
   .process__grid::before{display:none}
-  .footer__grid{grid-template-columns:1fr 1fr;gap:32px}
+  .footer__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
 }
 @media(max-width:860px){
   .nav{position:fixed;inset:0 0 0 auto;width:min(82vw,340px);flex-direction:column;align-items:stretch;justify-content:flex-start;gap:6px;background:#fff;border-left:1px solid var(--line);padding:96px 22px 30px;transform:translateX(100%);transition:transform .4s var(--ease);box-shadow:-20px 0 50px -20px rgba(20,40,25,.25);z-index:999}
@@ -736,24 +736,31 @@ svg{width:100%;height:100%}
   .findbox{flex-direction:column;align-items:flex-start;text-align:left}
 }
 @media(max-width:680px){
-  /* Categorías: pastillas que se deslizan horizontalmente */
-  .cats{flex-wrap:nowrap;justify-content:flex-start;gap:9px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:4px 2px 10px;margin-bottom:14px}
-  .cats .cat{flex:0 0 auto;scroll-snap-align:start}
-  /* Productos: carrusel horizontal deslizable */
-  .prods{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:4px 2px 14px}
-  .prods .prod{flex:0 0 72%;scroll-snap-align:center}
+  /* Productos de la colección: grilla compacta de 2 columnas (escaneable) */
+  .prods{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
   .prod:hover{transform:none}
-  .prod__body{padding:12px}
-  .prod__name{font-size:.92rem}
-  .prod__foot{flex-wrap:wrap}
-  .prod__add,.prod__quote{flex:1 1 100%;text-align:center}
+  .prod__media{aspect-ratio:4/3}
+  .prod__body{padding:11px}
+  .prod__cat{font-size:.6rem}
+  .prod__name{font-size:.84rem;line-height:1.18;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .prod__meta{gap:4px;margin-bottom:8px}
+  .prod__ref,.prod__brand{font-size:.65rem;padding:1px 6px}
+  .prod__price{margin:0 0 10px;gap:6px}
+  .prod__now{font-size:1.04rem}
+  .prod__old{font-size:.74rem}
+  .prod__off{font-size:.7rem;padding:4px 7px;top:8px;left:8px}
+  .prod__foot{flex-direction:column;gap:6px}
+  .prod__add{width:100%}
+  .prod__quote{width:100%;padding:8px}
   .search{margin-bottom:20px}
   .search__input{font-size:.92rem;padding:14px 44px 14px 46px}
   .findbox{padding:22px}
 }
-@media(max-width:420px){
-  .cats .cat{flex:0 0 40%}
-  .prods .prod{flex:0 0 82%}
+@media(max-width:400px){
+  .prods{gap:9px}
+  .prod__name{font-size:.8rem}
+  .prod__now{font-size:.98rem}
+  .cattile__name{font-size:.92rem}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
