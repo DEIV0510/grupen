@@ -335,16 +335,25 @@
     const countEl = $('#prodsCount'), emptyEl = $('#prodsEmpty'), resetEl = $('#catReset');
     const input = $('#searchInput'), clearBtn = $('#searchClear');
     const counts = {}; PRODUCTS.forEach(p => counts[p.cat] = (counts[p.cat] || 0) + 1);
-
     const promoN = PRODUCTS.filter(isHot).length;
-    const promoCard = promoN ? '<button class="cat cat--promo" type="button" data-cat="promo"><span class="cat__ico">' + GIFT + '</span><span class="cat__name">Súper Ofertas</span><span class="cat__n">' + promoN + '</span></button>' : '';
-    catsGrid.innerHTML = promoCard + CATEGORIES.filter(c => counts[c.id]).map(c =>
-      '<button class="cat" type="button" data-cat="' + c.id + '">' +
-      '<span class="cat__ico">' + svgIco(c.id) + '</span>' +
-      '<span class="cat__name">' + c.name + '</span>' +
-      '<span class="cat__n">' + counts[c.id] + '</span></button>'
+    const bar = $('.prods__bar');
+
+    // --- Mosaico de categorías (foto + nombre); al hacer clic se abre la colección ---
+    const tileImg = id => { const p = (id === 'promo') ? PRODUCTS.find(isHot) : PRODUCTS.find(x => x.cat === id && x.img); return (p && p.img) ? p.img : ''; };
+    const wide = { electrico: true };
+    const tile = (cat, name, meta, cls) => {
+      const im = tileImg(cat);
+      return '<button class="cattile' + (cls || '') + '" type="button" data-cat="' + cat + '">' +
+        (im ? '<img class="cattile__img" src="' + im + '" alt="" loading="lazy" decoding="async">' : '') +
+        '<span class="cattile__grad"></span>' +
+        '<span class="cattile__body"><span class="cattile__name">' + name + '</span><span class="cattile__meta">' + meta + '</span></span></button>';
+    };
+    const promoTile = promoN ? tile('promo', 'Súper Ofertas', promoN + ' con gran descuento · Ver', ' cattile--promo cattile--wide') : '';
+    catsGrid.innerHTML = promoTile + CATEGORIES.filter(c => counts[c.id]).map(c =>
+      tile(c.id, c.name, counts[c.id] + ' repuesto' + (counts[c.id] === 1 ? '' : 's') + ' · Ver →', wide[c.id] ? ' cattile--wide' : '')
     ).join('');
 
+    const inCollection = () => activeCat !== 'all' || !!searchQuery;
     const matches = p => {
       if (activeCat === 'promo') { if (!isHot(p)) return false; }
       else if (activeCat !== 'all' && p.cat !== activeCat) return false;
@@ -352,6 +361,11 @@
       return true;
     };
     const render = () => {
+      const coll = inCollection();
+      catsGrid.hidden = coll;
+      prodsGrid.hidden = !coll;
+      if (bar) bar.hidden = !coll;
+      if (!coll) { if (emptyEl) emptyEl.hidden = true; return; }
       const list = PRODUCTS.filter(matches);
       prodsGrid.innerHTML = list.map(p => {
         const off = pctOff(p), hot = off >= 45;
@@ -368,37 +382,20 @@
         '<button class="prod__quote" type="button" data-pn="' + escAttr(p.name) + '" data-pr="' + escAttr(p.ref) + '">Cotizar</button>' +
         '</div></div></article>';
       }).join('');
-      if (countEl) countEl.textContent = (activeCat === 'all' && !searchQuery)
-        ? 'Productos disponibles'
-        : list.length + ' resultado' + (list.length === 1 ? '' : 's') + (activeCat !== 'all' ? ' · ' + CAT_NAME[activeCat] : '');
+      if (countEl) countEl.textContent = searchQuery
+        ? list.length + ' resultado' + (list.length === 1 ? '' : 's') + ' para "' + input.value.trim() + '"'
+        : CAT_NAME[activeCat] + ' · ' + list.length + ' repuesto' + (list.length === 1 ? '' : 's');
       if (emptyEl) emptyEl.hidden = list.length > 0;
-      if (resetEl) resetEl.hidden = activeCat === 'all';
-      $$('.cat', catsGrid).forEach(b => b.classList.toggle('is-active', b.dataset.cat === activeCat));
+      if (resetEl) resetEl.hidden = false;
     };
 
-    catsGrid.addEventListener('click', e => {
-      const b = e.target.closest('.cat'); if (!b) return;
-      activeCat = (activeCat === b.dataset.cat) ? 'all' : b.dataset.cat;
-      render();
-      const t = $('#catalogo').getBoundingClientRect().top + window.scrollY - 60;
-      window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
-    });
-    if (resetEl) resetEl.addEventListener('click', () => { activeCat = 'all'; render(); });
+    const goTop = () => { const t = $('#catalogo').getBoundingClientRect().top + window.scrollY - 60; window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' }); };
+    catsGrid.addEventListener('click', e => { const b = e.target.closest('.cattile'); if (!b) return; activeCat = b.dataset.cat; render(); goTop(); });
+    const back = () => { activeCat = 'all'; searchQuery = ''; if (input) input.value = ''; if (clearBtn) clearBtn.hidden = true; render(); goTop(); };
+    if (resetEl) resetEl.addEventListener('click', back);
     const verOf = document.getElementById('verOfertas');
-    if (verOf) verOf.addEventListener('click', e => {
-      e.preventDefault();
-      activeCat = 'promo';
-      if (input) { input.value = ''; searchQuery = ''; }
-      if (clearBtn) clearBtn.hidden = true;
-      render();
-      const t = $('#catalogo').getBoundingClientRect().top + window.scrollY - 60;
-      window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
-    });
-    if (input) input.addEventListener('input', () => {
-      searchQuery = input.value.trim().toLowerCase();
-      if (clearBtn) clearBtn.hidden = !searchQuery;
-      render();
-    });
+    if (verOf) verOf.addEventListener('click', e => { e.preventDefault(); activeCat = 'promo'; if (input) { input.value = ''; searchQuery = ''; } if (clearBtn) clearBtn.hidden = true; render(); goTop(); });
+    if (input) input.addEventListener('input', () => { searchQuery = input.value.trim().toLowerCase(); if (clearBtn) clearBtn.hidden = !searchQuery; render(); });
     if (clearBtn) clearBtn.addEventListener('click', () => { input.value = ''; searchQuery = ''; clearBtn.hidden = true; render(); input.focus(); });
     prodsGrid.addEventListener('click', e => {
       const add = e.target.closest('.prod__add');
