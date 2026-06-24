@@ -365,6 +365,7 @@
       catsGrid.hidden = coll;
       prodsGrid.hidden = !coll;
       if (bar) bar.hidden = !coll;
+      const pb = document.getElementById('verOfertas'); if (pb) pb.hidden = coll;  // el banner solo en el mosaico
       if (!coll) { if (emptyEl) emptyEl.hidden = true; return; }
       const list = PRODUCTS.filter(matches);
       prodsGrid.innerHTML = list.map(p => {
@@ -389,7 +390,12 @@
       if (resetEl) resetEl.hidden = false;
     };
 
-    const goTop = () => { const t = $('#catalogo').getBoundingClientRect().top + window.scrollY - 60; window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' }); };
+    const goTop = () => {
+      // En colección, desplazar directo a los productos (no al banner de arriba)
+      const target = inCollection() ? ($('.search') || bar || prodsGrid) : $('#catalogo');
+      const t = target.getBoundingClientRect().top + window.scrollY - 76;
+      window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
+    };
     catsGrid.addEventListener('click', e => { const b = e.target.closest('.cattile'); if (!b) return; activeCat = b.dataset.cat; render(); goTop(); });
     const back = () => { activeCat = 'all'; searchQuery = ''; if (input) input.value = ''; if (clearBtn) clearBtn.hidden = true; render(); goTop(); };
     if (resetEl) resetEl.addEventListener('click', back);

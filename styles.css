@@ -3,6 +3,10 @@
    styles.css — Tema CLARO premium automotriz + bandas verde oscuro
    ========================================================= */
 
+/* El atributo [hidden] SIEMPRE oculta (gana a .catmos/.prods/.promo2x1 que
+   tienen display:grid/flex y si no, dejaban visible el mosaico/productos). */
+[hidden]{display:none!important}
+
 /* ---------- Design tokens ---------- */
 :root{
   /* Verde del logo */
