@@ -397,6 +397,13 @@ svg{width:100%;height:100%}
 .lightbox__buy{display:flex;flex-direction:column;align-items:center;gap:10px}
 .lightbox__price{font-family:var(--ff-display);font-weight:800;font-size:1.5rem;color:var(--green-300)}
 .cover__price{color:var(--green-600);font-weight:800;white-space:nowrap}
+/* En celular: imagen más baja para que el precio + botón Cotizar siempre quepan */
+@media(max-width:680px){
+  .lightbox{padding:16px}
+  .lightbox__stage{max-height:92vh;overflow-y:auto;gap:10px}
+  .lightbox__stage img{max-height:56vh}
+  .lightbox__price{font-size:1.3rem}
+}
 .lightbox__close{position:absolute;top:18px;right:22px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);font-size:1.7rem;line-height:1;color:#fff;display:grid;place-items:center;transition:background .25s,transform .25s}
 .lightbox__close:hover{background:var(--green-600);transform:rotate(90deg)}
 .lightbox__nav{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);font-size:1.8rem;color:#fff;display:grid;place-items:center;transition:background .25s,transform .25s;flex:none}
