@@ -7,8 +7,8 @@
 const sharp = require('sharp');
 const path = require('path');
 
-const SRC = 'C:/Users/Lenovo/Desktop/Grupen/LOGO.png';
-const BRAND = 'C:/Users/Lenovo/Desktop/grupen-web/assets/brand';
+const SRC = path.join(__dirname, '_material-Grupen', 'LOGO.png');
+const BRAND = path.join(__dirname, 'assets', 'brand');
 
 async function whiteToTransparent(buffer) {
   const { data, info } = await sharp(buffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
@@ -37,6 +37,22 @@ async function toGreen(buffer, rgb) {
   const ch = info.channels;
   for (let i = 0; i < data.length; i += ch) {
     if (data[i + 3] > 6) { data[i] = rgb[0]; data[i + 1] = rgb[1]; data[i + 2] = rgb[2]; }
+  }
+  return sharp(data, { raw: { width: info.width, height: info.height, channels: ch } }).png();
+}
+
+// Para fondo OSCURO (header sobre el video): conserva los verdes (emblema +
+// "Grupo Empresarial de Negocios") y pasa el texto oscuro/gris ("GRUPEN" +
+// "Siempre Contigo") a BLANCO, para que sea legible. = logo oficial sobre oscuro.
+async function toDarkBg(buffer, green) {
+  const { data, info } = await sharp(buffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const ch = info.channels;
+  for (let i = 0; i < data.length; i += ch) {
+    if (data[i + 3] <= 8) continue;
+    const r = data[i], g = data[i + 1], b = data[i + 2];
+    const isGreen = g > 85 && g > r + 20 && g > b + 20;
+    if (isGreen) { data[i] = green[0]; data[i + 1] = green[1]; data[i + 2] = green[2]; }
+    else { data[i] = 255; data[i + 1] = 255; data[i + 2] = 255; }
   }
   return sharp(data, { raw: { width: info.width, height: info.height, channels: ch } }).png();
 }
@@ -101,7 +117,8 @@ async function run() {
   await sharp(horiz).toFile(path.join(BRAND, 'logo-horizontal.png'));
   await (await toWhite(horiz)).toFile(path.join(BRAND, 'logo-horizontal-white.png'));
   await (await toGreen(horiz, [92, 198, 55])).toFile(path.join(BRAND, 'logo-horizontal-green.png'));
-  console.log('  logo-horizontal (color + white + green) ' + cW + 'x' + cH);
+  await (await toDarkBg(horiz, [92, 198, 55])).toFile(path.join(BRAND, 'logo-horizontal-over.png'));
+  console.log('  logo-horizontal (color + white + green + over) ' + cW + 'x' + cH);
 
   // Logo completo stacked (color + blanco)
   const fullTrim = await sharp(SRC).trim({ threshold: 12 }).png().toBuffer();
