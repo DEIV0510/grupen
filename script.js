@@ -486,7 +486,14 @@
     if (!stage || !lb) return;
     const items = $$('.cover__item', stage);
     const capEl = $('#coverCap'), dotsEl = $('#coverDots');
-    const data = items.map(it => ({ src: it.dataset.src, cap: it.dataset.cap || '' }));
+    const ALL = (window.GRUPEN_PRODUCTS || []);
+    const findProd = cap => {
+      const c = cap.toLowerCase().trim(); if (!c) return null;
+      return ALL.find(x => x.name.toLowerCase() === c)
+          || ALL.find(x => { const n = x.name.toLowerCase().split(' (')[0]; return n === c.split(' (')[0] || n.startsWith(c) || c.startsWith(n); })
+          || null;
+    };
+    const data = items.map(it => { const cap = it.dataset.cap || ''; const p = findProd(cap); return { src: it.dataset.src, cap, price: p ? p.price : 0, ref: p ? (p.ref || '') : '' }; });
     const len = items.length;
     let active = 0, timer = null, moved = false, down = false, sx = 0;
 
@@ -508,7 +515,7 @@
         it.style.pointerEvents = vis ? 'auto' : 'none';
         it.classList.toggle('is-active', i === active);
       });
-      if (capEl) capEl.textContent = data[active].cap;
+      if (capEl) capEl.innerHTML = data[active].cap + (data[active].price ? ' <span class="cover__price">' + fmtCOP(data[active].price) + '</span>' : '');
       Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('is-active', i === active));
     }
     const go = n => { active = (n + len) % len; render(); };
@@ -526,8 +533,13 @@
     $('#coverNext').addEventListener('click', () => { next(); reset(); });
 
     // lightbox
-    const lbImg = $('#lbImg'), lbCap = $('#lbCap'); let lbIdx = 0;
-    const showLB = i => { lbIdx = (i + len) % len; lbImg.src = data[lbIdx].src; lbImg.alt = data[lbIdx].cap; lbCap.textContent = data[lbIdx].cap; };
+    const lbImg = $('#lbImg'), lbCap = $('#lbCap'), lbPrice = $('#lbPrice'), lbCotizar = $('#lbCotizar'); let lbIdx = 0;
+    const showLB = i => {
+      lbIdx = (i + len) % len; const d = data[lbIdx];
+      lbImg.src = d.src; lbImg.alt = d.cap; lbCap.textContent = d.cap;
+      if (lbPrice) lbPrice.textContent = d.price ? fmtCOP(d.price) : '';
+      if (lbCotizar) lbCotizar.onclick = () => window.open(waLink('Hola GRUPEN 👋, quiero cotizar: *' + d.cap + '*' + (d.ref ? ' (Ref. ' + d.ref + ')' : '') + '. ¿Tienen disponibilidad?'), '_blank');
+    };
     const openLB = i => { showLB(i); lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; };
     const closeLB = () => { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
     $('#lbClose').addEventListener('click', closeLB);
