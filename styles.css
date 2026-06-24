@@ -521,6 +521,7 @@ svg{width:100%;height:100%}
 .cattile--wide{grid-column:span 2}
 .cattile:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
 .cattile:focus-visible{outline:3px solid var(--green-500);outline-offset:2px}
+.cattile.is-active{box-shadow:0 0 0 3px var(--green-500),0 14px 32px -12px rgba(0,0,0,.45)}
 .cattile__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .55s var(--ease)}
 .cattile:hover .cattile__img{transform:scale(1.07)}
 .cattile__grad{position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(9,28,15,.9) 0%,rgba(9,28,15,.48) 42%,rgba(9,28,15,.04) 74%)}

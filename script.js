@@ -374,12 +374,7 @@
       return true;
     };
     const render = () => {
-      const coll = inCollection();
-      catsGrid.hidden = coll;
-      prodsGrid.hidden = !coll;
-      if (bar) bar.hidden = !coll;
-      const pb = document.getElementById('verOfertas'); if (pb) pb.hidden = coll;  // el banner solo en el mosaico
-      if (!coll) { if (emptyEl) emptyEl.hidden = true; return; }
+      // El mosaico (filtro) y los productos CON PRECIO se ven siempre desde el inicio
       const list = PRODUCTS.filter(matches);
       prodsGrid.innerHTML = list.map(p => {
         const off = pctOff(p), hot = off >= 45;
@@ -398,22 +393,24 @@
       }).join('');
       if (countEl) countEl.textContent = searchQuery
         ? list.length + ' resultado' + (list.length === 1 ? '' : 's') + ' para "' + input.value.trim() + '"'
-        : CAT_NAME[activeCat] + ' · ' + list.length + ' repuesto' + (list.length === 1 ? '' : 's');
+        : (activeCat === 'all' ? 'Todos los repuestos · ' + list.length + ' con precio'
+                               : CAT_NAME[activeCat] + ' · ' + list.length + ' repuesto' + (list.length === 1 ? '' : 's'));
       if (emptyEl) emptyEl.hidden = list.length > 0;
-      if (resetEl) resetEl.hidden = false;
+      if (resetEl) resetEl.hidden = (activeCat === 'all' && !searchQuery);
+      $$('.cattile', catsGrid).forEach(b => b.classList.toggle('is-active', b.dataset.cat === activeCat));
     };
 
-    const goTop = () => {
-      // En colección, desplazar directo a los productos (no al banner de arriba)
-      const target = inCollection() ? ($('.search') || bar || prodsGrid) : $('#catalogo');
+    const goToProducts = () => {
+      const target = (bar || prodsGrid);
       const t = target.getBoundingClientRect().top + window.scrollY - 76;
       window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
     };
-    catsGrid.addEventListener('click', e => { const b = e.target.closest('.cattile'); if (!b) return; activeCat = b.dataset.cat; render(); goTop(); });
-    const back = () => { activeCat = 'all'; searchQuery = ''; if (input) input.value = ''; if (clearBtn) clearBtn.hidden = true; render(); goTop(); };
+    // Clic en una categoría = filtrar; clic de nuevo en la misma = ver todos
+    catsGrid.addEventListener('click', e => { const b = e.target.closest('.cattile'); if (!b) return; activeCat = (activeCat === b.dataset.cat) ? 'all' : b.dataset.cat; render(); goToProducts(); });
+    const back = () => { activeCat = 'all'; searchQuery = ''; if (input) input.value = ''; if (clearBtn) clearBtn.hidden = true; render(); };
     if (resetEl) resetEl.addEventListener('click', back);
     const verOf = document.getElementById('verOfertas');
-    if (verOf) verOf.addEventListener('click', e => { e.preventDefault(); activeCat = 'promo'; if (input) { input.value = ''; searchQuery = ''; } if (clearBtn) clearBtn.hidden = true; render(); goTop(); });
+    if (verOf) verOf.addEventListener('click', e => { e.preventDefault(); activeCat = 'promo'; if (input) { input.value = ''; searchQuery = ''; } if (clearBtn) clearBtn.hidden = true; render(); goToProducts(); });
     if (input) input.addEventListener('input', () => { searchQuery = input.value.trim().toLowerCase(); if (clearBtn) clearBtn.hidden = !searchQuery; render(); });
     if (clearBtn) clearBtn.addEventListener('click', () => { input.value = ''; searchQuery = ''; clearBtn.hidden = true; render(); input.focus(); });
     prodsGrid.addEventListener('click', e => {
