@@ -336,7 +336,7 @@
     ? window.GRUPEN_PRODUCTS
     : [];
 
-  let activeCat = 'all', searchQuery = '';
+  let activeCat = 'all', searchQuery = '', showAll = false;
   const escAttr = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   const fmtCOP = n => '$' + Number(n || 0).toLocaleString('es-CO');
   const pctOff = p => (p.priceOld && p.priceOld > p.price) ? Math.round((1 - p.price / p.priceOld) * 100) : 0;
@@ -374,9 +374,14 @@
       return true;
     };
     const render = () => {
-      // El mosaico (filtro) y los productos CON PRECIO se ven siempre desde el inicio
+      // El mosaico (filtro) y los productos CON PRECIO se ven siempre desde el inicio.
+      // En "Todos" mostramos un grupo + botón "Ver todos" (para no hacer scroll eterno).
       const list = PRODUCTS.filter(matches);
-      prodsGrid.innerHTML = list.map(p => {
+      const isAll = (activeCat === 'all' && !searchQuery);
+      const LIMIT = 12;
+      const limited = isAll && !showAll && list.length > LIMIT;
+      const shown = limited ? list.slice(0, LIMIT) : list;
+      prodsGrid.innerHTML = shown.map(p => {
         const off = pctOff(p), hot = off >= 45;
         return '<article class="prod' + (hot ? ' prod--promo' : '') + '">' +
         '<div class="prod__media">' + (p.img ? '<img src="' + p.img + '" alt="' + escAttr(p.name) + '" loading="lazy" decoding="async">' : '<span class="prod__ico">' + svgIco(p.cat) + '</span>') +
@@ -393,10 +398,12 @@
       }).join('');
       if (countEl) countEl.textContent = searchQuery
         ? list.length + ' resultado' + (list.length === 1 ? '' : 's') + ' para "' + input.value.trim() + '"'
-        : (activeCat === 'all' ? 'Todos los repuestos · ' + list.length + ' con precio'
-                               : CAT_NAME[activeCat] + ' · ' + list.length + ' repuesto' + (list.length === 1 ? '' : 's'));
+        : (isAll ? 'Mostrando ' + shown.length + ' de ' + list.length + ' repuestos'
+                 : CAT_NAME[activeCat] + ' · ' + list.length + ' repuesto' + (list.length === 1 ? '' : 's'));
       if (emptyEl) emptyEl.hidden = list.length > 0;
       if (resetEl) resetEl.hidden = (activeCat === 'all' && !searchQuery);
+      const moreEl = document.getElementById('prodsMore');
+      if (moreEl) { moreEl.hidden = !limited; if (limited) moreEl.textContent = '↓ Ver todos los ' + list.length + ' repuestos'; }
       $$('.cattile', catsGrid).forEach(b => b.classList.toggle('is-active', b.dataset.cat === activeCat));
     };
 
@@ -406,13 +413,15 @@
       window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
     };
     // Clic en una categoría = filtrar; clic de nuevo en la misma = ver todos
-    catsGrid.addEventListener('click', e => { const b = e.target.closest('.cattile'); if (!b) return; activeCat = (activeCat === b.dataset.cat) ? 'all' : b.dataset.cat; render(); goToProducts(); });
-    const back = () => { activeCat = 'all'; searchQuery = ''; if (input) input.value = ''; if (clearBtn) clearBtn.hidden = true; render(); };
+    catsGrid.addEventListener('click', e => { const b = e.target.closest('.cattile'); if (!b) return; activeCat = (activeCat === b.dataset.cat) ? 'all' : b.dataset.cat; showAll = false; render(); goToProducts(); });
+    const back = () => { activeCat = 'all'; searchQuery = ''; showAll = false; if (input) input.value = ''; if (clearBtn) clearBtn.hidden = true; render(); };
     if (resetEl) resetEl.addEventListener('click', back);
     const verOf = document.getElementById('verOfertas');
-    if (verOf) verOf.addEventListener('click', e => { e.preventDefault(); activeCat = 'promo'; if (input) { input.value = ''; searchQuery = ''; } if (clearBtn) clearBtn.hidden = true; render(); goToProducts(); });
-    if (input) input.addEventListener('input', () => { searchQuery = input.value.trim().toLowerCase(); if (clearBtn) clearBtn.hidden = !searchQuery; render(); });
-    if (clearBtn) clearBtn.addEventListener('click', () => { input.value = ''; searchQuery = ''; clearBtn.hidden = true; render(); input.focus(); });
+    if (verOf) verOf.addEventListener('click', e => { e.preventDefault(); activeCat = 'promo'; showAll = false; if (input) { input.value = ''; searchQuery = ''; } if (clearBtn) clearBtn.hidden = true; render(); goToProducts(); });
+    if (input) input.addEventListener('input', () => { searchQuery = input.value.trim().toLowerCase(); showAll = false; if (clearBtn) clearBtn.hidden = !searchQuery; render(); });
+    if (clearBtn) clearBtn.addEventListener('click', () => { input.value = ''; searchQuery = ''; showAll = false; clearBtn.hidden = true; render(); input.focus(); });
+    const moreBtn = document.getElementById('prodsMore');
+    if (moreBtn) moreBtn.addEventListener('click', () => { showAll = true; render(); goToProducts(); });
     prodsGrid.addEventListener('click', e => {
       const add = e.target.closest('.prod__add');
       if (add) { const p = PRODUCTS.find(x => (x.ref || x.name) === add.dataset.key); if (p) Cart.add(p); return; }
