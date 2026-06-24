@@ -167,6 +167,13 @@
       burger.setAttribute('aria-expanded', String(open));
     });
     $$('.nav__link').forEach(l => l.addEventListener('click', close));
+    // Cerrar el menú al tocar fuera o con Escape
+    document.addEventListener('click', e => {
+      if (!nav.classList.contains('is-open')) return;
+      if (nav.contains(e.target) || burger.contains(e.target)) return;
+      close();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('is-open')) close(); });
 
     // scroll suave para todos los anchors internos
     $$('a[href^="#"]').forEach(a => {
