@@ -539,8 +539,13 @@ svg{width:100%;height:100%}
 .chip--clear{background:var(--green-050);border-color:rgba(61,168,30,.3);color:var(--green-700)}
 .chip--clear:hover{background:var(--green-500);color:#fff;border-color:transparent}
 .prods{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.prods__more-wrap{display:flex;justify-content:center;margin-top:26px}
-.prods__more{min-width:240px;font-weight:700}
+.pager{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:7px;margin-top:28px}
+.pager__btn{min-width:40px;height:40px;padding:0 11px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--text);font-family:var(--ff-display);font-weight:700;font-size:.95rem;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.pager__btn:hover:not(:disabled){border-color:var(--green-500);color:var(--green-700);transform:translateY(-1px)}
+.pager__btn.is-active{background:var(--green-500);border-color:var(--green-500);color:#fff}
+.pager__btn:disabled{opacity:.4;cursor:not-allowed}
+.pager__arrow{font-size:1.35rem;line-height:1}
+.pager__dots{color:var(--muted);padding:0 2px;align-self:flex-end}
 .prod{display:flex;flex-direction:column;border-radius:var(--radius);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);overflow:hidden;transition:transform .3s var(--ease),border-color .3s,box-shadow .3s}
 .prod:hover{transform:translateY(-5px);border-color:rgba(61,168,30,.4);box-shadow:var(--shadow)}
 .prod__media{aspect-ratio:4/3;background:linear-gradient(160deg,#fff,#eef3ec);display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line-2)}

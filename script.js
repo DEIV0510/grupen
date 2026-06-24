@@ -336,7 +336,7 @@
     ? window.GRUPEN_PRODUCTS
     : [];
 
-  let activeCat = 'all', searchQuery = '', showAll = false;
+  let activeCat = 'all', searchQuery = '', page = 1;
   const escAttr = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   const fmtCOP = n => '$' + Number(n || 0).toLocaleString('es-CO');
   const pctOff = p => (p.priceOld && p.priceOld > p.price) ? Math.round((1 - p.price / p.priceOld) * 100) : 0;
@@ -374,13 +374,12 @@
       return true;
     };
     const render = () => {
-      // El mosaico (filtro) y los productos CON PRECIO se ven siempre desde el inicio.
-      // En "Todos" mostramos un grupo + botón "Ver todos" (para no hacer scroll eterno).
+      // Productos CON PRECIO desde el inicio, PAGINADOS de a 6 (páginas 1, 2, 3…).
       const list = PRODUCTS.filter(matches);
-      const isAll = (activeCat === 'all' && !searchQuery);
-      const LIMIT = 12;
-      const limited = isAll && !showAll && list.length > LIMIT;
-      const shown = limited ? list.slice(0, LIMIT) : list;
+      const PER = 6;
+      const pages = Math.max(1, Math.ceil(list.length / PER));
+      if (page > pages) page = pages; if (page < 1) page = 1;
+      const shown = list.slice((page - 1) * PER, (page - 1) * PER + PER);
       prodsGrid.innerHTML = shown.map(p => {
         const off = pctOff(p), hot = off >= 45;
         return '<article class="prod' + (hot ? ' prod--promo' : '') + '">' +
@@ -398,13 +397,29 @@
       }).join('');
       if (countEl) countEl.textContent = searchQuery
         ? list.length + ' resultado' + (list.length === 1 ? '' : 's') + ' para "' + input.value.trim() + '"'
-        : (isAll ? 'Mostrando ' + shown.length + ' de ' + list.length + ' repuestos'
-                 : CAT_NAME[activeCat] + ' · ' + list.length + ' repuesto' + (list.length === 1 ? '' : 's'));
+        : (activeCat === 'all' ? 'Todos los repuestos · ' + list.length
+                               : CAT_NAME[activeCat] + ' · ' + list.length + ' repuesto' + (list.length === 1 ? '' : 's'));
       if (emptyEl) emptyEl.hidden = list.length > 0;
       if (resetEl) resetEl.hidden = (activeCat === 'all' && !searchQuery);
-      const moreEl = document.getElementById('prodsMore');
-      if (moreEl) { moreEl.hidden = !limited; if (limited) moreEl.textContent = '↓ Ver todos los ' + list.length + ' repuestos'; }
+      renderPager(pages);
       $$('.cattile', catsGrid).forEach(b => b.classList.toggle('is-active', b.dataset.cat === activeCat));
+    };
+
+    const pagerEl = $('#prodsPager');
+    const renderPager = (pages) => {
+      if (!pagerEl) return;
+      if (pages <= 1) { pagerEl.innerHTML = ''; pagerEl.hidden = true; return; }
+      pagerEl.hidden = false;
+      let html = '<button class="pager__btn pager__arrow" type="button" data-pg="' + (page - 1) + '"' + (page === 1 ? ' disabled' : '') + ' aria-label="Anterior">&lsaquo;</button>';
+      const nums = [];
+      for (let i = 1; i <= pages; i++) {
+        if (i === 1 || i === pages || (i >= page - 1 && i <= page + 1)) nums.push(i);
+        else if (nums[nums.length - 1] !== '…') nums.push('…');
+      }
+      nums.forEach(n => { html += (n === '…') ? '<span class="pager__dots">…</span>'
+        : '<button class="pager__btn' + (n === page ? ' is-active' : '') + '" type="button" data-pg="' + n + '">' + n + '</button>'; });
+      html += '<button class="pager__btn pager__arrow" type="button" data-pg="' + (page + 1) + '"' + (page === pages ? ' disabled' : '') + ' aria-label="Siguiente">&rsaquo;</button>';
+      pagerEl.innerHTML = html;
     };
 
     const goToProducts = () => {
@@ -413,15 +428,14 @@
       window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
     };
     // Clic en una categoría = filtrar; clic de nuevo en la misma = ver todos
-    catsGrid.addEventListener('click', e => { const b = e.target.closest('.cattile'); if (!b) return; activeCat = (activeCat === b.dataset.cat) ? 'all' : b.dataset.cat; showAll = false; render(); goToProducts(); });
-    const back = () => { activeCat = 'all'; searchQuery = ''; showAll = false; if (input) input.value = ''; if (clearBtn) clearBtn.hidden = true; render(); };
+    catsGrid.addEventListener('click', e => { const b = e.target.closest('.cattile'); if (!b) return; activeCat = (activeCat === b.dataset.cat) ? 'all' : b.dataset.cat; page = 1; render(); goToProducts(); });
+    const back = () => { activeCat = 'all'; searchQuery = ''; page = 1; if (input) input.value = ''; if (clearBtn) clearBtn.hidden = true; render(); };
     if (resetEl) resetEl.addEventListener('click', back);
     const verOf = document.getElementById('verOfertas');
-    if (verOf) verOf.addEventListener('click', e => { e.preventDefault(); activeCat = 'promo'; showAll = false; if (input) { input.value = ''; searchQuery = ''; } if (clearBtn) clearBtn.hidden = true; render(); goToProducts(); });
-    if (input) input.addEventListener('input', () => { searchQuery = input.value.trim().toLowerCase(); showAll = false; if (clearBtn) clearBtn.hidden = !searchQuery; render(); });
-    if (clearBtn) clearBtn.addEventListener('click', () => { input.value = ''; searchQuery = ''; showAll = false; clearBtn.hidden = true; render(); input.focus(); });
-    const moreBtn = document.getElementById('prodsMore');
-    if (moreBtn) moreBtn.addEventListener('click', () => { showAll = true; render(); goToProducts(); });
+    if (verOf) verOf.addEventListener('click', e => { e.preventDefault(); activeCat = 'promo'; page = 1; if (input) { input.value = ''; searchQuery = ''; } if (clearBtn) clearBtn.hidden = true; render(); goToProducts(); });
+    if (input) input.addEventListener('input', () => { searchQuery = input.value.trim().toLowerCase(); page = 1; if (clearBtn) clearBtn.hidden = !searchQuery; render(); });
+    if (clearBtn) clearBtn.addEventListener('click', () => { input.value = ''; searchQuery = ''; page = 1; clearBtn.hidden = true; render(); input.focus(); });
+    if (pagerEl) pagerEl.addEventListener('click', e => { const b = e.target.closest('[data-pg]'); if (!b || b.disabled) return; const pg = parseInt(b.dataset.pg, 10); if (pg >= 1) { page = pg; render(); goToProducts(); } });
     prodsGrid.addEventListener('click', e => {
       const add = e.target.closest('.prod__add');
       if (add) { const p = PRODUCTS.find(x => (x.ref || x.name) === add.dataset.key); if (p) Cart.add(p); return; }
