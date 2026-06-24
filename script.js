@@ -501,13 +501,10 @@
     const items = $$('.cover__item', stage);
     const capEl = $('#coverCap'), dotsEl = $('#coverDots');
     const ALL = (window.GRUPEN_PRODUCTS || []);
-    const findProd = cap => {
-      const c = cap.toLowerCase().trim(); if (!c) return null;
-      return ALL.find(x => x.name.toLowerCase() === c)
-          || ALL.find(x => { const n = x.name.toLowerCase().split(' (')[0]; return n === c.split(' (')[0] || n.startsWith(c) || c.startsWith(n); })
-          || null;
-    };
-    const data = items.map(it => { const cap = it.dataset.cap || ''; const p = findProd(cap); return { src: it.dataset.src, cap, price: p ? p.price : 0, ref: p ? (p.ref || '') : '' }; });
+    // Empareja cada foto de la galería con su producto por la RUTA de imagen
+    // (exacta y única) — antes era por nombre y a varios no les salía el precio.
+    const findProd = src => ALL.find(x => x.img === src) || null;
+    const data = items.map(it => { const src = it.dataset.src; const p = findProd(src); return { src, cap: it.dataset.cap || '', price: p ? p.price : 0, ref: p ? (p.ref || '') : '' }; });
     const len = items.length;
     let active = 0, timer = null, moved = false, down = false, sx = 0;
 
