@@ -23,6 +23,12 @@
   const $  = (s, c) => (c || document).querySelector(s);
   const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let _toastT;
+  const showToast = (msg) => {
+    const t = $('#toast'); if (!t) return;
+    t.textContent = msg; t.classList.add('is-show');
+    clearTimeout(_toastT); _toastT = setTimeout(() => t.classList.remove('is-show'), 2800);
+  };
 
   const waLink = (text) =>
     'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(text || CONFIG.waGreeting);
@@ -425,7 +431,8 @@
       const key = p.ref || p.name;
       const ex = this.items.find(i => i.key === key);
       if (ex) ex.qty++; else this.items.push({ key, name: p.name, ref: p.ref, brand: p.brand || '', price: p.price || 0, qty: 1 });
-      this.save(); this.render(); this.flash(); this.open();
+      this.save(); this.render(); this.flash();
+      showToast('✓ Agregado al carrito (' + this.count() + ') · toca 🛒 arriba para enviar');
     },
     setQty(key, d) {
       const it = this.items.find(i => i.key === key); if (!it) return;
