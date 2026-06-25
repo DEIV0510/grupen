@@ -121,6 +121,9 @@ window.GRUPEN_PRODUCTS = [
   { name:'Stop Renault 6', ref:'4-95', brand:'Multipartes', cat:'luces', price:50000, img:'assets/products/stop-renault-6.webp' },
   { name:'Lámpara Stop Renault 4', ref:'', brand:'', cat:'luces', price:40000, img:'assets/products/lampara-stop-renault-4.webp' },
   { name:'Stop Daihatsu 4-105', ref:'4-105', brand:'Multipartes', cat:'luces', price:34000, img:'assets/products/stop-daihatsu-4105.webp' },
+  { name:'Lámpara Campero Toyota Direccional Delantero', ref:'', brand:'', cat:'luces', price:80000, img:'assets/products/lampara-campero-toyota.webp' },
+  { name:'Regleta Triple', ref:'', brand:'', cat:'luces', price:54000, img:'assets/products/regleta-triple.webp' },
+  { name:'Lámpara Sema', ref:'', brand:'', cat:'luces', price:25000, img:'assets/products/lampara-sema.webp' },
 
   /* ——— BOMBILLOS ——— */
   { name:'Bombillo P45 12V', ref:'P45', brand:'', cat:'bombillos', price:9750, priceOld:15000, img:'assets/products/bombillo-p45-12v.webp' },
