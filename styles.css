@@ -584,7 +584,7 @@ svg{width:100%;height:100%}
 .promo2x1::after{content:"";position:absolute;left:-30px;top:50%;width:230px;height:230px;transform:translateY(-50%);background:radial-gradient(circle,rgba(245,196,90,.3),transparent 62%);pointer-events:none}
 .promo2x1__shine{position:absolute;top:0;bottom:0;left:-35%;width:24%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.26),transparent);transform:skewX(-18deg);animation:promoShine 4.2s ease-in-out infinite;pointer-events:none}
 @keyframes promoShine{0%{left:-35%}55%,100%{left:135%}}
-.promo2x1__badge{position:relative;z-index:1;flex:none;display:inline-flex;align-items:baseline;justify-content:center;width:94px;height:94px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#ffe79a,#f3a81b 66%,#d9850b);color:#3a2606;font-family:var(--ff-display);box-shadow:0 14px 32px -8px rgba(232,146,10,.85),inset 0 0 0 4px rgba(255,255,255,.45)}
+.promo2x1__badge{position:relative;z-index:1;flex:none;display:inline-flex;align-items:center;justify-content:center;width:94px;height:94px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#ffe79a,#f3a81b 66%,#d9850b);color:#3a2606;font-family:var(--ff-display);line-height:1;box-shadow:0 14px 32px -8px rgba(232,146,10,.85),inset 0 0 0 4px rgba(255,255,255,.45)}
 .promo2x1__badge::after{content:"";position:absolute;inset:8px;border:1.5px dashed rgba(58,38,6,.38);border-radius:50%}
 .promo2x1__badge b{font-size:2.15rem;font-weight:800;line-height:1;letter-spacing:-.02em}
 .promo2x1__badge i{font-size:1rem;font-style:normal;opacity:.92;font-weight:800;padding:0 1px}
