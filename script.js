@@ -14,8 +14,8 @@
     city:     'Colombia',               // ← ciudad / ubicación
     waGreeting: 'Hola GRUPEN Almacén 👋, estoy interesado en repuestos para mi vehículo.',
     social: {                           // ← enlaces de redes (deja '#' si aún no tienes)
-      facebook:  '#',
-      instagram: '#',
+      facebook:  'https://www.facebook.com/profile.php?id=100063481995870',
+      instagram: 'https://www.instagram.com/gru.pen',
       tiktok:    '#'
     }
   };
