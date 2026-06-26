@@ -427,6 +427,8 @@
     const goToProducts = () => {
       const target = (bar || prodsGrid);
       const t = target.getBoundingClientRect().top + window.scrollY - 76;
+      // Nunca subir solo: solo baja a los productos si están MÁS ABAJO; si ya estás ahí, no se mueve.
+      if (t <= window.scrollY + 4) return;
       window.scrollTo({ top: t, behavior: prefersReduced ? 'auto' : 'smooth' });
     };
     // Clic en una categoría = filtrar; clic de nuevo en la misma = ver todos
