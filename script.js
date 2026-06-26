@@ -335,6 +335,8 @@
   const PRODUCTS = (window.GRUPEN_PRODUCTS && window.GRUPEN_PRODUCTS.length)
     ? window.GRUPEN_PRODUCTS
     : [];
+  // Destacados (STOP) primero — para que se ofrezcan al inicio
+  PRODUCTS.sort((a, b) => (b.feat ? 1 : 0) - (a.feat ? 1 : 0));
 
   let activeCat = 'all', searchQuery = '', page = 1;
   const escAttr = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -381,10 +383,10 @@
       if (page > pages) page = pages; if (page < 1) page = 1;
       const shown = list.slice((page - 1) * PER, (page - 1) * PER + PER);
       prodsGrid.innerHTML = shown.map(p => {
-        const off = pctOff(p), hot = off >= 45;
-        return '<article class="prod' + (hot ? ' prod--promo' : '') + '">' +
+        const off = pctOff(p), hot = off >= 45, feat = !!p.feat;
+        return '<article class="prod' + ((hot || feat) ? ' prod--promo' : '') + '">' +
         '<div class="prod__media">' + (p.img ? '<img src="' + p.img + '" alt="' + escAttr(p.name) + '" loading="lazy" decoding="async">' : '<span class="prod__ico">' + svgIco(p.cat) + '</span>') +
-        (off ? '<span class="prod__off' + (hot ? ' prod__off--hot' : '') + '">-' + off + '%</span>' : '') + '</div>' +
+        (feat ? '<span class="prod__off prod__off--hot">★ Oferta</span>' : (off ? '<span class="prod__off' + (hot ? ' prod__off--hot' : '') + '">-' + off + '%</span>' : '')) + '</div>' +
         '<div class="prod__body">' +
         '<span class="prod__cat">' + CAT_NAME[p.cat] + '</span>' +
         '<h4 class="prod__name">' + p.name + '</h4>' +
