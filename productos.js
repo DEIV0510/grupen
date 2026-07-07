@@ -79,6 +79,7 @@ window.GRUPEN_PRODUCTS = [
   { name:'Escobillas NPR', ref:'', brand:'', cat:'electrico', price:28990, priceOld:44600, img:'assets/products/escobillas-npr.webp' },
   { name:'Sensor de Temperatura Chevrolet', ref:'', brand:'', cat:'electrico', price:46800, priceOld:72000, img:'assets/products/sensor-temperatura-chevrolet.webp' },
   { name:'Switch Cambia Luz Toyota Land Cruiser', ref:'', brand:'', cat:'electrico', price:27950, priceOld:43000, img:'assets/products/switch-cambialuz-landcruiser.webp' },
+  { name:'Cambia Luz de Pie', ref:'', brand:'', cat:'electrico', price:17000, priceOld:34000, img:'assets/products/cambia-luz-pie.webp' },
   { name:'Terminal de Batería 4.5 cm', ref:'', brand:'', cat:'electrico', price:8500, priceOld:13000, img:'assets/products/terminal-bateria-45cm.webp' },
   { name:'Terminal de Batería 38', ref:'', brand:'', cat:'electrico', price:3250, priceOld:5000, img:'assets/products/terminal-bateria-38.webp' },
   { name:'Terminal de Batería 5 cm', ref:'', brand:'', cat:'electrico', price:10000, priceOld:15700, img:'assets/products/terminal-bateria-5cm.webp' },
@@ -113,7 +114,6 @@ window.GRUPEN_PRODUCTS = [
   { name:'Soporte de Muelle D300', ref:'D300', brand:'', cat:'soporteria', price:142400, priceOld:219000, img:'assets/products/soporte-muelle-d300.webp' },
 
   /* ——— LUCES ——— */
-  { name:'Cambia Luz de Pie', ref:'', brand:'', cat:'luces', price:17000, priceOld:34000, img:'assets/products/cambia-luz-pie.webp' },
   { name:'Exploradora 6"', ref:'', brand:'', cat:'luces', price:29250, priceOld:45000, img:'assets/products/exploradora-6.webp' },
   { name:'Stop Toyota Land Cruiser', ref:'4-119', brand:'', cat:'luces', price:90000, feat:true, p2x1:true, img:'assets/products/stop-toyota-landcruiser.webp' },
   { name:'Stop Chevrolet Chevette', ref:'', brand:'', cat:'luces', price:80000, feat:true, p2x1:true, img:'assets/products/stop-chevrolet-chevette.webp' },

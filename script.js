@@ -10,7 +10,7 @@
   const CONFIG = {
     whatsapp: '573007093089',           // ← número de WhatsApp (formato internacional, sin + ni espacios)
     phone:    '+57 300 709 3089',       // ← teléfono visible / para llamadas
-    email:    'ventas@grupen.com.co',   // ← correo de contacto
+    email:    'grupencontabilidad@hotmail.com',   // ← correo de contacto
     city:     'Colombia',               // ← ciudad / ubicación
     waGreeting: 'Hola GRUPEN Almacén 👋, estoy interesado en repuestos para mi vehículo.',
     social: {                           // ← enlaces de redes (deja '#' si aún no tienes)
