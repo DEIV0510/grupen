@@ -43,6 +43,7 @@
      rodamientos    → Rodamientos
      llantas        → Llantas
      lubricantes    → Lubricantes / Aceites
+     equipos        → Equipos (herramientas, máquinas, compresores, etc.)
      otros          → Otros Repuestos
 
    (¿Necesitas una categoría nueva? Avísame y la agrego.)

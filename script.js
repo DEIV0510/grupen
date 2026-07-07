@@ -312,6 +312,7 @@
     turbos:'<circle cx="12" cy="12" r="2.6"/><path d="M12 9.4c0-4 5-5 5-5M14.6 12c4 0 5 5 5 5M12 14.6c0 4-5 5-5 5M9.4 12c-4 0-5-5-5-5"/>',
     embrague:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/><path d="M12 4v3.2M12 16.8V20M4 12h3.2M16.8 12H20"/>',
     direccion:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M12 3.2v6.4M5.1 16.5l5.2-3M18.9 16.5l-5.2-3"/>',
+    equipos:'<rect x="3" y="8" width="18" height="12" rx="1.5"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>',
     otros:'<path d="M14.7 6.3a3.5 3.5 0 0 0-4.5 4.5L4 17l3 3 6.2-6.2a3.5 3.5 0 0 0 4.5-4.5l-2 2-2-2 2-2Z"/>'
   };
   const svgIco = id => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICO[id] || ICO.otros) + '</svg>';
@@ -325,7 +326,7 @@
     { id:'pastillas', name:'Pastillas' }, { id:'correas', name:'Correas' },
     { id:'retenedores', name:'Retenedores' }, { id:'rodamientos', name:'Rodamientos' },
     { id:'llantas', name:'Llantas' }, { id:'lubricantes', name:'Lubricantes' },
-    { id:'otros', name:'Otros Repuestos' }
+    { id:'equipos', name:'Equipos' }, { id:'otros', name:'Otros Repuestos' }
   ];
   const CAT_NAME = {}; CATEGORIES.forEach(c => CAT_NAME[c.id] = c.name); CAT_NAME.promo = 'Súper Ofertas';
   const GIFT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v8H4v-8M2 8h20v4H2zM12 8V4M12 8H8.4a2.4 2.4 0 0 1 0-4.8C10.8 3.2 12 8 12 8Zm0 0h3.6a2.4 2.4 0 0 0 0-4.8C13.2 3.2 12 8 12 8Zm0 0v12"/></svg>';
