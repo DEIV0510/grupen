@@ -106,11 +106,11 @@ window.GRUPEN_PRODUCTS = [
   { name:'Soporte de Motor Dodge 300', ref:'', brand:'', cat:'soporteria', price:134300, priceOld:206500, img:'assets/products/soporte-dodge-300.webp' },
   { name:'Soporte Sicolsa Ford 800', ref:'', brand:'Sicolsa', cat:'soporteria', price:117000, priceOld:180000, img:'assets/products/soporte-sicolsa-ford800.webp' },
 
-  /* ——— HOJAS DE MUELLE / SOPORTES ——— */
-  { name:'Soporte de Muelle B60', ref:'B60', brand:'', cat:'muelles', price:157300, priceOld:242000, img:'assets/products/soporte-muelle-b60.webp' },
-  { name:'Soporte de Muelle Ford (Sicolsa)', ref:'SSX215SF', brand:'Sicolsa', cat:'muelles', price:171800, priceOld:264308, img:'assets/products/soporte-muelle-ford.webp' },
-  { name:'Soporte de Muelle Superior Doble Troque Freightliner', ref:'', brand:'', cat:'muelles', price:557400, priceOld:857500, img:'assets/products/soporte-muelle-freightliner.webp' },
-  { name:'Soporte de Muelle D300', ref:'D300', brand:'', cat:'muelles', price:142400, priceOld:219000, img:'assets/products/soporte-muelle-d300.webp' },
+  /* ——— SOPORTERÍA (soportes de muelle) ——— */
+  { name:'Soporte de Muelle B60', ref:'B60', brand:'', cat:'soporteria', price:157300, priceOld:242000, img:'assets/products/soporte-muelle-b60.webp' },
+  { name:'Soporte de Muelle Ford (Sicolsa)', ref:'SSX215SF', brand:'Sicolsa', cat:'soporteria', price:171800, priceOld:264308, img:'assets/products/soporte-muelle-ford.webp' },
+  { name:'Soporte de Muelle Superior Doble Troque Freightliner', ref:'', brand:'', cat:'soporteria', price:557400, priceOld:857500, img:'assets/products/soporte-muelle-freightliner.webp' },
+  { name:'Soporte de Muelle D300', ref:'D300', brand:'', cat:'soporteria', price:142400, priceOld:219000, img:'assets/products/soporte-muelle-d300.webp' },
 
   /* ——— LUCES ——— */
   { name:'Cambia Luz de Pie', ref:'', brand:'', cat:'luces', price:17000, priceOld:34000, img:'assets/products/cambia-luz-pie.webp' },
