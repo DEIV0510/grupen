@@ -127,13 +127,13 @@ window.GRUPEN_PRODUCTS = [
   { name:'Lámpara Sema', ref:'', brand:'', cat:'luces', price:25000, img:'assets/products/lampara-sema.webp' },
   { name:'Stop Renault 12', ref:'', brand:'', cat:'luces', price:50000, img:'assets/products/stop-renault-12.webp' },
   { name:'Stop Triple', ref:'', brand:'', cat:'luces', price:30000, img:'assets/products/stop-triple-30.webp' },
-  { name:'Luz Letrero Ford', ref:'', brand:'', cat:'luces', price:30000, img:'assets/products/luz-letrero-ford.webp' },
 
   /* ——— RETROVISORES / ESPEJOS ——— */
   { name:'Espejo Plástico 375×197mm', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/espejo-plastico-375.webp' },
   { name:'Retrovisor Mitsubishi Cromado', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/retrovisor-mitsubishi.webp' },
   { name:'Retrovisor Blazer', ref:'', brand:'', cat:'retrovisores', price:48000, img:'assets/products/retrovisor-blazer.webp' },
   { name:'Retrovisor Camioneta 210×150mm', ref:'', brand:'', cat:'retrovisores', price:40000, img:'assets/products/retrovisor-camioneta.webp' },
+  { name:'Retrovisor Ford 33×18', ref:'', brand:'', cat:'retrovisores', price:30000, img:'assets/products/retrovisor-ford.webp' },
 
   /* ——— BOMBILLOS ——— */
   { name:'Bombillo P45 12V', ref:'P45', brand:'', cat:'bombillos', price:9750, priceOld:15000, img:'assets/products/bombillo-p45-12v.webp' },

@@ -15,7 +15,7 @@ const ITEMS = [
   { src:'RETROVISOR BLAZER $48.000.png', slug:'retrovisor-blazer' },
   { src:'Retrovisor para camioneta 210mm x 150 mm $40.000.png', slug:'retrovisor-camioneta' },
   { src:'stop 30.000.png', slug:'stop-triple-30' },
-  { src:'luz FORD 30.000.png', slug:'luz-letrero-ford' },
+  { src:'luz FORD 30.000.png', slug:'retrovisor-ford' },
   { src:'STOP RENAUL 12 $50.000.png', slug:'stop-renault-12' },
 ];
 
