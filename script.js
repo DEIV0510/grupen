@@ -313,6 +313,7 @@
     embrague:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/><path d="M12 4v3.2M12 16.8V20M4 12h3.2M16.8 12H20"/>',
     direccion:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M12 3.2v6.4M5.1 16.5l5.2-3M18.9 16.5l-5.2-3"/>',
     equipos:'<rect x="3" y="8" width="18" height="12" rx="1.5"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>',
+    retrovisores:'<rect x="4" y="4" width="16" height="13" rx="4"/><path d="M7.5 14.5 14.5 7.5M11 14.5l3.5-3.5M9 21h6"/>',
     otros:'<path d="M14.7 6.3a3.5 3.5 0 0 0-4.5 4.5L4 17l3 3 6.2-6.2a3.5 3.5 0 0 0 4.5-4.5l-2 2-2-2 2-2Z"/>'
   };
   const svgIco = id => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICO[id] || ICO.otros) + '</svg>';
@@ -323,6 +324,7 @@
     { id:'freno-aire', name:'Freno de Aire' }, { id:'soporteria', name:'Soportería' },
     { id:'muelles', name:'Hojas de Muelle' }, { id:'luces', name:'Luces' },
     { id:'bombillos', name:'Bombillos' }, { id:'direccion', name:'Dirección' },
+    { id:'retrovisores', name:'Retrovisores' },
     { id:'pastillas', name:'Pastillas' }, { id:'correas', name:'Correas' },
     { id:'retenedores', name:'Retenedores' }, { id:'rodamientos', name:'Rodamientos' },
     { id:'llantas', name:'Llantas' }, { id:'lubricantes', name:'Lubricantes' },
@@ -384,15 +386,16 @@
       if (page > pages) page = pages; if (page < 1) page = 1;
       const shown = list.slice((page - 1) * PER, (page - 1) * PER + PER);
       prodsGrid.innerHTML = shown.map(p => {
-        const off = pctOff(p), hot = off >= 45, feat = !!p.feat;
-        return '<article class="prod' + ((hot || feat) ? ' prod--promo' : '') + '">' +
+        const off = pctOff(p), hot = off >= 45, feat = !!p.feat, dosx1 = !!p.p2x1;
+        return '<article class="prod' + ((hot || feat || dosx1) ? ' prod--promo' : '') + '">' +
         '<div class="prod__media">' + (p.img ? '<img src="' + p.img + '" alt="' + escAttr(p.name) + '" loading="lazy" decoding="async">' : '<span class="prod__ico">' + svgIco(p.cat) + '</span>') +
-        (feat ? '<span class="prod__off prod__off--hot">★ Oferta</span>' : (off ? '<span class="prod__off' + (hot ? ' prod__off--hot' : '') + '">-' + off + '%</span>' : '')) + '</div>' +
+        (dosx1 ? '<span class="prod__off prod__off--hot">🎁 2×1</span>' : (feat ? '<span class="prod__off prod__off--hot">★ Oferta</span>' : (off ? '<span class="prod__off' + (hot ? ' prod__off--hot' : '') + '">-' + off + '%</span>' : ''))) + '</div>' +
         '<div class="prod__body">' +
         '<span class="prod__cat">' + CAT_NAME[p.cat] + '</span>' +
         '<h4 class="prod__name">' + p.name + '</h4>' +
         '<div class="prod__meta">' + (p.ref ? '<span class="prod__ref">Ref. ' + p.ref + '</span>' : '') + (p.brand ? '<span class="prod__brand">' + p.brand + '</span>' : '') + '</div>' +
         '<div class="prod__price">' + (p.priceOld ? '<span class="prod__old">' + fmtCOP(p.priceOld) + '</span>' : '') + '<span class="prod__now">' + fmtCOP(p.price) + '</span></div>' +
+        (dosx1 ? '<div class="prod__2x1note">🎁 Paga 1 y llévate 2</div>' : '') +
         '<div class="prod__foot">' +
         '<button class="btn btn--sm btn--primary prod__add" type="button" data-key="' + escAttr(p.ref || p.name) + '">+ Agregar</button>' +
         '<button class="prod__quote" type="button" data-pn="' + escAttr(p.name) + '" data-pr="' + escAttr(p.ref) + '">Cotizar</button>' +

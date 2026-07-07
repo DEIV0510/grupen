@@ -115,8 +115,8 @@ window.GRUPEN_PRODUCTS = [
   /* ——— LUCES ——— */
   { name:'Cambia Luz de Pie', ref:'', brand:'', cat:'luces', price:17000, priceOld:34000, img:'assets/products/cambia-luz-pie.webp' },
   { name:'Exploradora 6"', ref:'', brand:'', cat:'luces', price:29250, priceOld:45000, img:'assets/products/exploradora-6.webp' },
-  { name:'Stop Toyota Land Cruiser', ref:'4-119', brand:'', cat:'luces', price:90000, feat:true, img:'assets/products/stop-toyota-landcruiser.webp' },
-  { name:'Stop Chevrolet Chevette', ref:'', brand:'', cat:'luces', price:80000, feat:true, img:'assets/products/stop-chevrolet-chevette.webp' },
+  { name:'Stop Toyota Land Cruiser', ref:'4-119', brand:'', cat:'luces', price:90000, feat:true, p2x1:true, img:'assets/products/stop-toyota-landcruiser.webp' },
+  { name:'Stop Chevrolet Chevette', ref:'', brand:'', cat:'luces', price:80000, feat:true, p2x1:true, img:'assets/products/stop-chevrolet-chevette.webp' },
   { name:'Stop Chevrolet LUV 1600', ref:'4-117', brand:'Multipartes', cat:'luces', price:68000, feat:true, img:'assets/products/stop-chevrolet-luv.webp' },
   { name:'Lámpara Triple Cromada', ref:'', brand:'', cat:'luces', price:63000, feat:true, img:'assets/products/lampara-triple-cromada.webp' },
   { name:'Stop Renault 6', ref:'4-95', brand:'Multipartes', cat:'luces', price:50000, feat:true, img:'assets/products/stop-renault-6.webp' },
@@ -125,6 +125,15 @@ window.GRUPEN_PRODUCTS = [
   { name:'Lámpara Campero Toyota Direccional Delantero', ref:'', brand:'', cat:'luces', price:80000, img:'assets/products/lampara-campero-toyota.webp' },
   { name:'Regleta Triple', ref:'', brand:'', cat:'luces', price:54000, img:'assets/products/regleta-triple.webp' },
   { name:'Lámpara Sema', ref:'', brand:'', cat:'luces', price:25000, img:'assets/products/lampara-sema.webp' },
+  { name:'Stop Renault 12', ref:'', brand:'', cat:'luces', price:50000, img:'assets/products/stop-renault-12.webp' },
+  { name:'Stop Triple', ref:'', brand:'', cat:'luces', price:30000, img:'assets/products/stop-triple-30.webp' },
+  { name:'Luz Letrero Ford', ref:'', brand:'', cat:'luces', price:30000, img:'assets/products/luz-letrero-ford.webp' },
+
+  /* ——— RETROVISORES / ESPEJOS ——— */
+  { name:'Espejo Plástico 375×197mm', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/espejo-plastico-375.webp' },
+  { name:'Retrovisor Mitsubishi Cromado', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/retrovisor-mitsubishi.webp' },
+  { name:'Retrovisor Blazer', ref:'', brand:'', cat:'retrovisores', price:48000, img:'assets/products/retrovisor-blazer.webp' },
+  { name:'Retrovisor Camioneta 210×150mm', ref:'', brand:'', cat:'retrovisores', price:40000, img:'assets/products/retrovisor-camioneta.webp' },
 
   /* ——— BOMBILLOS ——— */
   { name:'Bombillo P45 12V', ref:'P45', brand:'', cat:'bombillos', price:9750, priceOld:15000, img:'assets/products/bombillo-p45-12v.webp' },
