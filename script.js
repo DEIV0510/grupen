@@ -314,6 +314,7 @@
     direccion:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M12 3.2v6.4M5.1 16.5l5.2-3M18.9 16.5l-5.2-3"/>',
     equipos:'<rect x="3" y="8" width="18" height="12" rx="1.5"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>',
     retrovisores:'<rect x="4" y="4" width="16" height="13" rx="4"/><path d="M7.5 14.5 14.5 7.5M11 14.5l3.5-3.5M9 21h6"/>',
+    compresores:'<rect x="3" y="10" width="12" height="7" rx="3.5"/><rect x="5" y="4.5" width="6" height="5.5" rx="1"/><path d="M6 17v2.5M12 17v2.5M15 13h3"/><circle cx="19" cy="9" r="2.6"/><path d="M19 9 20.5 7.5"/>',
     otros:'<path d="M14.7 6.3a3.5 3.5 0 0 0-4.5 4.5L4 17l3 3 6.2-6.2a3.5 3.5 0 0 0 4.5-4.5l-2 2-2-2 2-2Z"/>'
   };
   const svgIco = id => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICO[id] || ICO.otros) + '</svg>';
@@ -325,6 +326,7 @@
     { id:'muelles', name:'Hojas de Muelle' }, { id:'luces', name:'Luces' },
     { id:'bombillos', name:'Bombillos' }, { id:'direccion', name:'Dirección' },
     { id:'retrovisores', name:'Retrovisores' },
+    { id:'compresores', name:'Compresores' },
     { id:'pastillas', name:'Pastillas' }, { id:'correas', name:'Correas' },
     { id:'retenedores', name:'Retenedores' }, { id:'rodamientos', name:'Rodamientos' },
     { id:'llantas', name:'Llantas' }, { id:'lubricantes', name:'Lubricantes' },

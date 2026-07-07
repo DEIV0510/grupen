@@ -148,6 +148,10 @@ window.GRUPEN_PRODUCTS = [
   /* ——— DIRECCIÓN ——— */
   { name:'Extremo de Dirección Renault 12', ref:'', brand:'', cat:'direccion', price:29900, priceOld:46000, img:'assets/products/extremo-direccion-renault12.webp' },
 
+  /* ——— COMPRESORES ——— */
+  { name:'Compresor 2 Etapas, 4 Pistones, 9 HP Trifásico', ref:'', brand:'', cat:'compresores', price:9500000, img:'assets/products/compresor-9hp-4pistones.webp' },
+  { name:'Compresor Doble Tapa, 2 Pistones, 4 HP Trifásico', ref:'', brand:'', cat:'compresores', price:6000000, img:'assets/products/compresor-4hp-2pistones.webp' },
+
   /* ——— OTROS ——— */
   { name:'Pegante de Empaquetaduras (peq. $10.000 / grande $15.000)', ref:'', brand:'', cat:'otros', price:10000, img:'assets/products/pegante-empaquetaduras.webp' },
   { name:'Seguro de Caja de Cambios', ref:'', brand:'', cat:'otros', price:7800, priceOld:12000, img:'assets/products/seguro-caja-cambios.webp' },
