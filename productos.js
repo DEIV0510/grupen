@@ -134,6 +134,13 @@ window.GRUPEN_PRODUCTS = [
   { name:'Retrovisor Blazer', ref:'', brand:'', cat:'retrovisores', price:48000, img:'assets/products/retrovisor-blazer.webp' },
   { name:'Retrovisor Camioneta 210×150mm', ref:'', brand:'', cat:'retrovisores', price:40000, img:'assets/products/retrovisor-camioneta.webp' },
   { name:'Retrovisor Ford 33×18', ref:'', brand:'', cat:'retrovisores', price:30000, img:'assets/products/retrovisor-ford.webp' },
+  { name:'Espejo 285×200mm Metálico', ref:'', brand:'', cat:'retrovisores', price:31000, img:'assets/products/espejo-285-metalico.webp' },
+  { name:'Espejo Retrovisor 230×155mm', ref:'', brand:'', cat:'retrovisores', price:30000, img:'assets/products/espejo-retrovisor-230.webp' },
+  { name:'Espejo de Tornillo 174×174mm Plástico', ref:'', brand:'', cat:'retrovisores', price:18200, img:'assets/products/espejo-tornillo-174.webp' },
+  { name:'Retrovisor 197×140mm de Tornillo Plástico', ref:'', brand:'', cat:'retrovisores', price:18000, img:'assets/products/retrovisor-197-tornillo.webp' },
+  { name:'Retrovisor Interno Cromado', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-cromado.webp' },
+  { name:'Retrovisor Interno Negro', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-negro.webp' },
+  { name:'Retrovisor Pequeño Pata Larga', ref:'', brand:'', cat:'retrovisores', price:15000, img:'assets/products/retrovisor-pata-larga.webp' },
 
   /* ——— BOMBILLOS ——— */
   { name:'Bombillo P45 12V', ref:'P45', brand:'', cat:'bombillos', price:9750, priceOld:15000, img:'assets/products/bombillo-p45-12v.webp' },
