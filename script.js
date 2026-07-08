@@ -619,6 +619,57 @@
   }
 
   /* =======================================================
+     Lightbox de PRODUCTO — clic en la foto → verla en grande
+     ======================================================= */
+  function initProductZoom() {
+    const grid = $('#prodsGrid');
+    const lb = $('#prodLightbox');
+    if (!grid || !lb) return;
+    const ALL = (window.GRUPEN_PRODUCTS || []);
+    const findProd = src => ALL.find(x => x.img === src) || null;
+    const lbImg = $('#plbImg'), lbCap = $('#plbCap'), lbPrice = $('#plbPrice'), lbCot = $('#plbCotizar');
+    let list = [], idx = 0;
+
+    const imgsNow = () => $$('.prod__media img', grid);
+
+    function show(i) {
+      if (!list.length) return;
+      idx = (i + list.length) % list.length;
+      const el = list[idx];
+      const src = el.getAttribute('src');
+      const p = findProd(src);
+      const name = (p && p.name) || el.getAttribute('alt') || 'Repuesto';
+      lbImg.setAttribute('src', src);
+      lbImg.setAttribute('alt', name);
+      lbCap.textContent = name;
+      lbPrice.textContent = (p && p.price) ? fmtCOP(p.price) : '';
+      lbCot.onclick = () => window.open(waLink('Hola GRUPEN 👋, quiero cotizar: *' + name + '*' + (p && p.ref ? ' (Ref. ' + p.ref + ')' : '') + '. ¿Tienen disponibilidad?'), '_blank');
+    }
+    const open = i => { lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; show(i); };
+    const close = () => { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
+
+    // delegación: sobrevive a la paginación (se re-renderiza #prodsGrid)
+    grid.addEventListener('click', e => {
+      const im = e.target.closest('.prod__media img');
+      if (!im || !grid.contains(im)) return;
+      list = imgsNow();
+      const i = list.indexOf(im);
+      open(i < 0 ? 0 : i);
+    });
+
+    $('#plbClose').addEventListener('click', close);
+    $('#plbPrev').addEventListener('click', () => show(idx - 1));
+    $('#plbNext').addEventListener('click', () => show(idx + 1));
+    lb.addEventListener('click', e => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') show(idx + 1);
+      else if (e.key === 'ArrowLeft') show(idx - 1);
+    });
+  }
+
+  /* =======================================================
      10. TESTIMONIOS — carrusel auto
      ======================================================= */
   function initTestimonials() {
@@ -748,6 +799,7 @@
     initCatalog();
     initCart();
     initGallery();
+    initProductZoom();
     initTestimonials();
     initForm();
     initMarquee();

@@ -569,6 +569,9 @@ svg{width:100%;height:100%}
 .prod__media{aspect-ratio:4/3;background:linear-gradient(160deg,#fff,#eef3ec);display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line-2)}
 .prod__media img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .45s var(--ease)}
 .prod:hover .prod__media img{transform:scale(1.06)}
+.prod__media{cursor:zoom-in}
+.prod__media::after{content:'🔍';position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:9px;background:rgba(14,42,22,.62);display:grid;place-items:center;font-size:14px;opacity:.82;transition:opacity .25s var(--ease),transform .25s var(--ease);pointer-events:none;z-index:2}
+.prod:hover .prod__media::after{opacity:1;transform:scale(1.08)}
 .prod__ico{display:grid;place-items:center;width:60px;height:60px;border-radius:16px;background:var(--green-050);color:var(--green-600)}
 .prod__ico svg{width:30px;height:30px}
 .prod__body{padding:14px;flex:1;min-width:0;display:flex;flex-direction:column}

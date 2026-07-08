@@ -633,6 +633,24 @@ setTimeout(function(){var l=document.getElementById('loader');if(l&&!l.classList
   <button class="lightbox__nav lightbox__next" id="lbNext" aria-label="Siguiente">&#8250;</button>
 </div>
 
+<!-- ========= LIGHTBOX DE PRODUCTO (ver imagen grande) ========= -->
+<div class="lightbox" id="prodLightbox" aria-hidden="true" role="dialog" aria-label="Imagen ampliada del producto">
+  <button class="lightbox__close" id="plbClose" aria-label="Cerrar">&times;</button>
+  <button class="lightbox__nav lightbox__prev" id="plbPrev" aria-label="Anterior">&#8249;</button>
+  <figure class="lightbox__stage">
+    <img src="" alt="" id="plbImg" />
+    <figcaption id="plbCap"></figcaption>
+    <div class="lightbox__buy">
+      <span class="lightbox__price" id="plbPrice"></span>
+      <button class="btn btn--primary btn--sm" id="plbCotizar" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M20 11.9a8 8 0 0 1-11.9 7L4 20l1.1-4A8 8 0 1 1 20 11.9Z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        Cotizar por WhatsApp
+      </button>
+    </div>
+  </figure>
+  <button class="lightbox__nav lightbox__next" id="plbNext" aria-label="Siguiente">&#8250;</button>
+</div>
+
 <!-- ================= TOAST ================= -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
