@@ -127,6 +127,8 @@ window.GRUPEN_PRODUCTS = [
   { name:'Lámpara Sema', ref:'', brand:'', cat:'luces', price:25000, img:'assets/products/lampara-sema.webp' },
   { name:'Stop Renault 12', ref:'', brand:'', cat:'luces', price:50000, img:'assets/products/stop-renault-12.webp' },
   { name:'Stop Triple', ref:'', brand:'', cat:'luces', price:30000, img:'assets/products/stop-triple-30.webp' },
+  { name:'Lámpara Direccional 68×184mm', ref:'', brand:'', cat:'luces', price:13000, img:'assets/products/lampara-direccional-184.webp' },
+  { name:'Lámpara Direccional 54×176mm', ref:'', brand:'', cat:'luces', price:10000, img:'assets/products/lampara-direccional-176.webp' },
 
   /* ——— RETROVISORES / ESPEJOS ——— */
   { name:'Espejo Plástico 375×197mm', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/espejo-plastico-375.webp' },
