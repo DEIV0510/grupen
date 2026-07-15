@@ -129,8 +129,11 @@ window.GRUPEN_PRODUCTS = [
   { name:'Stop Triple', ref:'', brand:'', cat:'luces', price:30000, img:'assets/products/stop-triple-30.webp' },
   { name:'Lámpara Direccional 68×184mm', ref:'', brand:'', cat:'luces', price:13000, img:'assets/products/lampara-direccional-184.webp' },
   { name:'Lámpara Direccional 54×176mm', ref:'', brand:'', cat:'luces', price:10000, img:'assets/products/lampara-direccional-176.webp' },
+  { name:'Lámpara Lateral Chevrolet LUV 1600', ref:'', brand:'', cat:'luces', price:7600, img:'assets/products/lampara-lateral-luv-1600.webp' },
 
   /* ——— RETROVISORES / ESPEJOS ——— */
+  { name:'Espejo Medialuna KTC Convexo', ref:'', brand:'KTC', cat:'retrovisores', price:75000, img:'assets/products/espejo-medialuna-ktc.webp' },
+  { name:'Soporte de Retrovisor Blanco', ref:'', brand:'', cat:'retrovisores', price:65000, img:'assets/products/soporte-retrovisor-blanco.webp' },
   { name:'Espejo Plástico 375×197mm', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/espejo-plastico-375.webp' },
   { name:'Retrovisor Mitsubishi Cromado', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/retrovisor-mitsubishi.webp' },
   { name:'Retrovisor Blazer', ref:'', brand:'', cat:'retrovisores', price:48000, img:'assets/products/retrovisor-blazer.webp' },
@@ -140,6 +143,7 @@ window.GRUPEN_PRODUCTS = [
   { name:'Espejo Retrovisor 230×155mm', ref:'', brand:'', cat:'retrovisores', price:30000, img:'assets/products/espejo-retrovisor-230.webp' },
   { name:'Espejo de Tornillo 174×174mm Plástico', ref:'', brand:'', cat:'retrovisores', price:18200, img:'assets/products/espejo-tornillo-174.webp' },
   { name:'Retrovisor 197×140mm de Tornillo Plástico', ref:'', brand:'', cat:'retrovisores', price:18000, img:'assets/products/retrovisor-197-tornillo.webp' },
+  { name:'Retrovisor Campero Daihatsu 133×72mm', ref:'', brand:'', cat:'retrovisores', price:20000, img:'assets/products/retrovisor-campero-daihatsu.webp' },
   { name:'Retrovisor Interno Cromado', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-cromado.webp' },
   { name:'Retrovisor Interno Negro', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-negro.webp' },
   { name:'Retrovisor Pequeño Pata Larga', ref:'', brand:'', cat:'retrovisores', price:15000, img:'assets/products/retrovisor-pata-larga.webp' },
