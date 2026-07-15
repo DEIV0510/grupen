@@ -14,6 +14,7 @@ const ITEMS = [
   { src:'espejo medialuna.png',   slug:'espejo-medialuna-ktc' },
   { src:'lamapra chevrolet.png',  slug:'lampara-lateral-luv-1600' },
   { src:'retrovisor campero .png', slug:'retrovisor-campero-daihatsu' },
+  { src:'panoramicoplano.png',    slug:'espejo-panoramico-8-plano' },
 ];
 
 async function run() {

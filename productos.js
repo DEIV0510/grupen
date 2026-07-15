@@ -141,6 +141,7 @@ window.GRUPEN_PRODUCTS = [
   { name:'Retrovisor Ford 33×18', ref:'', brand:'', cat:'retrovisores', price:30000, img:'assets/products/retrovisor-ford.webp' },
   { name:'Espejo 285×200mm Metálico', ref:'', brand:'', cat:'retrovisores', price:31000, img:'assets/products/espejo-285-metalico.webp' },
   { name:'Espejo Retrovisor 230×155mm', ref:'', brand:'', cat:'retrovisores', price:30000, img:'assets/products/espejo-retrovisor-230.webp' },
+  { name:'Espejo Panorámico 8" Plano', ref:'', brand:'', cat:'retrovisores', price:30000, img:'assets/products/espejo-panoramico-8-plano.webp' },
   { name:'Espejo de Tornillo 174×174mm Plástico', ref:'', brand:'', cat:'retrovisores', price:18200, img:'assets/products/espejo-tornillo-174.webp' },
   { name:'Retrovisor 197×140mm de Tornillo Plástico', ref:'', brand:'', cat:'retrovisores', price:18000, img:'assets/products/retrovisor-197-tornillo.webp' },
   { name:'Retrovisor Campero Daihatsu 133×72mm', ref:'', brand:'', cat:'retrovisores', price:20000, img:'assets/products/retrovisor-campero-daihatsu.webp' },
