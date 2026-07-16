@@ -133,6 +133,7 @@ window.GRUPEN_PRODUCTS = [
 
   /* ——— RETROVISORES / ESPEJOS ——— */
   { name:'Espejo Medialuna KTC Convexo', ref:'', brand:'KTC', cat:'retrovisores', price:75000, img:'assets/products/espejo-medialuna-ktc.webp' },
+  { name:'Espejo Luna 7" Convexo KTC', ref:'', brand:'KTC', cat:'retrovisores', price:48000, img:'assets/products/espejo-luna-7-ktc.webp' },
   { name:'Soporte de Retrovisor Blanco', ref:'', brand:'', cat:'retrovisores', price:65000, img:'assets/products/soporte-retrovisor-blanco.webp' },
   { name:'Espejo Plástico 375×197mm', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/espejo-plastico-375.webp' },
   { name:'Retrovisor Mitsubishi Cromado', ref:'', brand:'', cat:'retrovisores', price:50000, img:'assets/products/retrovisor-mitsubishi.webp' },
@@ -145,6 +146,9 @@ window.GRUPEN_PRODUCTS = [
   { name:'Espejo de Tornillo 174×174mm Plástico', ref:'', brand:'', cat:'retrovisores', price:18200, img:'assets/products/espejo-tornillo-174.webp' },
   { name:'Retrovisor 197×140mm de Tornillo Plástico', ref:'', brand:'', cat:'retrovisores', price:18000, img:'assets/products/retrovisor-197-tornillo.webp' },
   { name:'Retrovisor Campero Daihatsu 133×72mm', ref:'', brand:'', cat:'retrovisores', price:20000, img:'assets/products/retrovisor-campero-daihatsu.webp' },
+  { name:'Retrovisor Renault 4-18 Universal', ref:'', brand:'', cat:'retrovisores', price:17000, img:'assets/products/retrovisor-renault-4-18.webp' },
+  { name:'Retrovisor Interno con Base 70×200mm', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-base-70x200.webp' },
+  { name:'Retrovisor Interno 64×216mm', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-64x216.webp' },
   { name:'Retrovisor Interno Cromado', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-cromado.webp' },
   { name:'Retrovisor Interno Negro', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-negro.webp' },
   { name:'Retrovisor Pequeño Pata Larga', ref:'', brand:'', cat:'retrovisores', price:15000, img:'assets/products/retrovisor-pata-larga.webp' },
