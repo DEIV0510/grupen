@@ -147,6 +147,7 @@ window.GRUPEN_PRODUCTS = [
   { name:'Retrovisor 197×140mm de Tornillo Plástico', ref:'', brand:'', cat:'retrovisores', price:18000, img:'assets/products/retrovisor-197-tornillo.webp' },
   { name:'Retrovisor Campero Daihatsu 133×72mm', ref:'', brand:'', cat:'retrovisores', price:20000, img:'assets/products/retrovisor-campero-daihatsu.webp' },
   { name:'Retrovisor con Brazo Campero Toyota 175×175mm', ref:'', brand:'', cat:'retrovisores', price:28000, img:'assets/products/retrovisor-brazo-toyota.webp' },
+  { name:'Retrovisor Chevrolet LUV 2300 203×152mm', ref:'', brand:'', cat:'retrovisores', price:28000, img:'assets/products/retrovisor-chevrolet-luv-2300.webp' },
   { name:'Retrovisor Renault 4-18 Universal', ref:'', brand:'', cat:'retrovisores', price:17000, img:'assets/products/retrovisor-renault-4-18.webp' },
   { name:'Retrovisor Interno con Base 70×200mm', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-base-70x200.webp' },
   { name:'Retrovisor Interno 64×216mm', ref:'', brand:'', cat:'retrovisores', price:16000, img:'assets/products/retrovisor-interno-64x216.webp' },
