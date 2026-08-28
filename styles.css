@@ -812,3 +812,33 @@ svg{width:100%;height:100%}
   .reveal{opacity:1;transform:none}
   .float-a,.float-b,.float-c{animation:none}
 }
+
+/* ============ PANTALLA DE ESPERA / MANTENIMIENTO ============ */
+/* Cubre TODO el sitio y bloquea la navegación mientras exista #holdScreen.
+   Para quitarla: borrar el <div id="holdScreen"> y la clase hold-lock del <body>. */
+html:has(#holdScreen){overflow:hidden}
+body.hold-lock{overflow:hidden!important}
+body.hold-lock > *:not(#holdScreen):not(script){display:none!important}
+
+.holdscreen{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:28px;overflow:hidden;background:#0b2312;color:#fff;font-family:var(--ff-body);animation:holdIn .5s ease both}
+@keyframes holdIn{from{opacity:0}to{opacity:1}}
+.holdscreen__bg{position:absolute;inset:0;z-index:0;background:
+  radial-gradient(1100px 560px at 50% -12%, rgba(92,198,55,.34), transparent 60%),
+  radial-gradient(900px 520px at 108% 118%, rgba(61,168,30,.26), transparent 55%),
+  linear-gradient(160deg,#0e2a16,#0a1f10 58%,#06160b)}
+.holdscreen__bg::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:22px 22px;opacity:.55}
+.holdscreen__inner{position:relative;z-index:1;max-width:580px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center}
+.holdscreen__logo{width:min(280px,72vw);height:auto;margin-bottom:24px;filter:drop-shadow(0 10px 26px rgba(0,0,0,.45))}
+.holdscreen__spinner{display:flex;gap:9px;margin-bottom:24px}
+.holdscreen__spinner span{width:12px;height:12px;border-radius:50%;background:var(--green-300);animation:holdDot 1.1s ease-in-out infinite}
+.holdscreen__spinner span:nth-child(2){animation-delay:.16s}
+.holdscreen__spinner span:nth-child(3){animation-delay:.32s}
+@keyframes holdDot{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-10px);opacity:1}}
+.holdscreen__kicker{font-family:var(--ff-display);font-weight:700;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green-300);background:rgba(92,198,55,.12);border:1px solid rgba(92,198,55,.32);padding:7px 16px;border-radius:100px;margin-bottom:16px}
+.holdscreen__title{font-family:var(--ff-display);font-weight:800;font-size:clamp(2rem,7vw,3.4rem);line-height:1.05;margin:0 0 14px}
+.holdscreen__text{font-size:clamp(1rem,2.6vw,1.14rem);line-height:1.6;color:rgba(255,255,255,.82);margin:0 0 30px;max-width:46ch}
+.holdscreen__wa{display:inline-flex;align-items:center;gap:11px;font-family:var(--ff-display);font-weight:700;font-size:1.02rem;color:#0b2312;background:#fff;padding:15px 30px;border-radius:100px;text-decoration:none;box-shadow:0 16px 42px -12px rgba(0,0,0,.55);transition:transform .25s var(--ease),box-shadow .25s}
+.holdscreen__wa:hover{transform:translateY(-3px);box-shadow:0 24px 54px -12px rgba(0,0,0,.6)}
+.holdscreen__wa svg{width:23px;height:23px;fill:#25D366;flex:none}
+.holdscreen__foot{margin:30px 0 0;font-size:.78rem;letter-spacing:.04em;color:rgba(255,255,255,.5)}
+@media(max-width:480px){.holdscreen{padding:22px}.holdscreen__wa{width:100%;justify-content:center}}
